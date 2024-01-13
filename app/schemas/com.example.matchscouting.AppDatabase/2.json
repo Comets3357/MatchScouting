@@ -1,0 +1,159 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 2,
+    "identityHash": "2d7c7a7d276f74139fda01f5a9aba1ec",
+    "entities": [
+      {
+        "tableName": "Team",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`team_number` TEXT NOT NULL, `team_name` TEXT, PRIMARY KEY(`team_number`))",
+        "fields": [
+          {
+            "fieldPath": "teamNumber",
+            "columnName": "team_number",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "teamName",
+            "columnName": "team_name",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "team_number"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "TeamMatchScout",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`team_number` TEXT NOT NULL, `event_key` TEXT NOT NULL, `match_number` TEXT NOT NULL, `auto_speaker` INTEGER NOT NULL, `auto_amp` INTEGER NOT NULL, `auto_leave` INTEGER NOT NULL, `tele_speaker` INTEGER NOT NULL, `tele_amp` INTEGER NOT NULL, `trap` INTEGER NOT NULL, `climb_status` INTEGER NOT NULL, `defense` INTEGER NOT NULL, `tablet` INTEGER NOT NULL, `scouter` TEXT, PRIMARY KEY(`team_number`, `event_key`))",
+        "fields": [
+          {
+            "fieldPath": "teamNumber",
+            "columnName": "team_number",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "event",
+            "columnName": "event_key",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "matchNumber",
+            "columnName": "match_number",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "autoSpeaker",
+            "columnName": "auto_speaker",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "autoAmp",
+            "columnName": "auto_amp",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "autoLeave",
+            "columnName": "auto_leave",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "teleSpeaker",
+            "columnName": "tele_speaker",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "teleAmp",
+            "columnName": "tele_amp",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "trap",
+            "columnName": "trap",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "climbStatus",
+            "columnName": "climb_status",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "defense",
+            "columnName": "defense",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "tablet",
+            "columnName": "tablet",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "scouter",
+            "columnName": "scouter",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "team_number",
+            "event_key"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "ActiveEventKey",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`pk` TEXT NOT NULL, `active_event_key` TEXT, PRIMARY KEY(`pk`))",
+        "fields": [
+          {
+            "fieldPath": "pk",
+            "columnName": "pk",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "activeEventKey",
+            "columnName": "active_event_key",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "pk"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '2d7c7a7d276f74139fda01f5a9aba1ec')"
+    ]
+  }
+}
