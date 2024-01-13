@@ -34,6 +34,7 @@ public class QRTransferActivity extends AppCompatActivity {
     private Button goForwardButton;
     private Button goBackButton;
     private Spinner teams;
+    private Spinner matches;
     AppDatabase db;
 
     Bitmap bitmap;
@@ -72,7 +73,20 @@ public class QRTransferActivity extends AppCompatActivity {
         });
 
         this.teams = (Spinner) findViewById(R.id.qrCodeActiveTeamSpinner);
+        this.matches = (Spinner) findViewById(R.id.qrCodeActiveMatchSpinner);
         this.teams.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                setTeamMatchKeys();
+                setQRCode();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        this.matches.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 setQRCode();
@@ -83,14 +97,43 @@ public class QRTransferActivity extends AppCompatActivity {
 
             }
         });
+
         setActiveEventKeys();
+        Intent intent = getIntent();
+        if (intent.hasExtra("teamNumber") && intent.hasExtra("matchNumber")) {
+            this.teams.setSelection(getIndexForSpinner(this.teams, intent.getStringExtra("teamNumber")));
+            this.matches.setSelection(getIndexForSpinner(this.matches, intent.getStringExtra("matchNumber")));
+            setQRCode();
+            Button scoutMore = (Button) findViewById(R.id.buttonScoutMore);
+            scoutMore.setVisibility(View.VISIBLE);
+            scoutMore.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    scoutSomeMore();
+                }
+            });
+        } else {
+            Button scoutMore = (Button) findViewById(R.id.buttonScoutMore);
+            scoutMore.setVisibility(View.GONE);
+        }
+
+    }
+    private int getIndexForSpinner(Spinner spinner, String myString){
+        for (int i=0;i<spinner.getCount();i++){
+            if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(myString)){
+                return i;
+            }
+        }
+
+        return 0;
     }
 
     public void setQRCode() {
         String activeTeam = this.teams.getSelectedItem().toString();
+        String matchNumber = this.matches.getSelectedItem().toString();
         String data = "";
         Gson gson = new Gson();
-        data = gson.toJson(db.teamMatchScoutDao().getTeamAtEvent(activeTeam, db.activeEventKeyDao().getActiveEventKey()));
+        data = gson.toJson(db.teamMatchScoutDao().getMatchScouted(activeTeam, matchNumber,db.activeEventKeyDao().getActiveEventKey()));
         // The path where the image will get saved
         String path = "activeQRTeam.png";
         // Encoding charset
@@ -143,13 +186,25 @@ public class QRTransferActivity extends AppCompatActivity {
     }
 
     public String[] getActiveEventKeys() {
-        List<TeamMatchScout> activeEventTeams = db.teamMatchScoutDao().getAllMatchesAtEvent(db.activeEventKeyDao().getActiveEventKey());
+        List<TeamMatchScout> activeEventTeams = db.teamMatchScoutDao().getTeamsWithScoutedMatches(db.activeEventKeyDao().getActiveEventKey());
         int numTeams = activeEventTeams.size();
         String[] teams = new String[numTeams];
         int i = 0;
         for (TeamMatchScout team : activeEventTeams) {
-
             teams[i] = team.getTeamNumber();
+            i++;
+        }
+        return teams;
+    }
+
+    public String[] getActiveMatchNumberKeys() {
+        String teamNumber = this.teams.getSelectedItem().toString();
+        List<TeamMatchScout> activeTeamMatches = db.teamMatchScoutDao().getMatchesScouted(teamNumber, db.activeEventKeyDao().getActiveEventKey());
+        int numMatches = activeTeamMatches.size();
+        String[] teams = new String[numMatches];
+        int i = 0;
+        for (TeamMatchScout match : activeTeamMatches) {
+            teams[i] = match.getMatchNumber();
             i++;
         }
         return teams;
@@ -160,6 +215,14 @@ public class QRTransferActivity extends AppCompatActivity {
                 android.R.layout.simple_spinner_item, getActiveEventKeys());
         teamsAtEventAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         this.teams.setAdapter(teamsAtEventAdapter);
+        setTeamMatchKeys();
+    }
+
+    public void setTeamMatchKeys() {
+        ArrayAdapter<String> matchesForTeamAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, getActiveMatchNumberKeys());
+        matchesForTeamAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        this.matches.setAdapter(matchesForTeamAdapter);
     }
 
     public void goToNextTeam() {
@@ -167,6 +230,7 @@ public class QRTransferActivity extends AppCompatActivity {
         int currPos = this.teams.getSelectedItemPosition();
         if (currPos + 1 < max) {
             this.teams.setSelection(currPos+1);
+            setTeamMatchKeys();
             setQRCode();
         } else {
             Toast errorToast = Toast.makeText(this, "No more teams to transfer QR code!", Toast.LENGTH_LONG);
@@ -179,6 +243,7 @@ public class QRTransferActivity extends AppCompatActivity {
         int currPos = this.teams.getSelectedItemPosition();
         if (currPos - 1 > min) {
             this.teams.setSelection(currPos-1);
+            setTeamMatchKeys();
             setQRCode();
         } else {
             Toast errorToast = Toast.makeText(this, "No more teams to transfer QR code!", Toast.LENGTH_LONG);
@@ -186,4 +251,7 @@ public class QRTransferActivity extends AppCompatActivity {
         }
     }
 
+    public void scoutSomeMore() {
+        finish();
+    }
 }

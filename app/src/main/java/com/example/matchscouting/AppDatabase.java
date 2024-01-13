@@ -16,7 +16,7 @@ import com.example.matchscouting.dao.TeamMatchScoutDao;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Team.class, TeamMatchScout.class, ActiveEventKey.class}, version = 1, exportSchema = true)
+@Database(entities = {Team.class, TeamMatchScout.class, ActiveEventKey.class}, version = 3, exportSchema = true)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract TeamDao teamDao();
 
@@ -36,6 +36,7 @@ public abstract class AppDatabase extends RoomDatabase {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                                     AppDatabase.class, "app_database")
                             .allowMainThreadQueries()
+                            .fallbackToDestructiveMigration()
                             .build();
                 }
             }

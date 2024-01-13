@@ -68,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
         if (db.teamMatchScoutDao().getAllMatchesAtEvent(db.activeEventKeyDao().getActiveEventKey()).size() > 0) {
             Intent qrCodeIntent = new Intent(this, QRTransferActivity.class);
             startActivity(qrCodeIntent);
-            finish();
         } else {
             Toast errorToast = Toast.makeText(this, "No matches recorded to transfer QR code!", Toast.LENGTH_LONG);
             errorToast.show();
@@ -96,4 +95,6 @@ public class MainActivity extends AppCompatActivity {
         Intent scoutingIntent = new Intent(this, ScoutingActivity.class);
         startActivity(scoutingIntent);
     }
+
+
 }
