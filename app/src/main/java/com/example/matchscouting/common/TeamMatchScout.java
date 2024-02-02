@@ -7,7 +7,7 @@ import androidx.room.Entity;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity(primaryKeys = {"team_number", "event_key"})
+@Entity(primaryKeys = {"team_number", "event_key", "match_number"})
 @Getter
 @Setter
 public class TeamMatchScout {

@@ -4,6 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Debug;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Switch;
@@ -13,6 +17,9 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.example.matchscouting.common.TeamMatchScout;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ScoutingActivity extends AppCompatActivity {
 
@@ -204,8 +211,37 @@ public class ScoutingActivity extends AppCompatActivity {
 
         textTeamNumber = (EditText) findViewById(R.id.editTextTeamNumber);
         textMatchNumber = (EditText) findViewById(R.id.editTextMatchNumber);
-        textScouter = (EditText) findViewById(R.id.editTextScouter);
         textTablet = (EditText) findViewById(R.id.editTextTablet);
+        if (db.activeEventKeyDao().getMatchScheduleKey().equals("1")) {
+            textTeamNumber.setEnabled(false);
+            this.textMatchNumber.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                    //Logger.getLogger("ScoutingLogger").log(Level.INFO, "Match Num: " + charSequence + " Tablet Num:" + textTablet.getText().toString());
+                    if ((charSequence+"").length() > 0 && textTablet.getText().toString().length() == 1) {
+                        textTeamNumber.setText(getTeamNumber(charSequence+"", textTablet.getText().toString()));
+                    } else {
+                        textTeamNumber.setText("");
+                    }
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+
+                }
+            });
+        } else {
+            textTeamNumber.setEnabled(true);
+        }
+
+
+        textScouter = (EditText) findViewById(R.id.editTextScouter);
+
 
         submitMatch = (Button) findViewById(R.id.buttonSubmit);
         submitMatch.setOnClickListener(new View.OnClickListener() {
@@ -215,6 +251,25 @@ public class ScoutingActivity extends AppCompatActivity {
             }
         });
         refreshScoutingTable();
+    }
+
+    public String getTeamNumber(String matchNumber, String tablet) {
+        switch(tablet) {
+            case "1":
+                return db.matchScheduleDao().getRed1(matchNumber, db.activeEventKeyDao().getActiveEventKey());
+            case "2":
+                return db.matchScheduleDao().getRed2(matchNumber, db.activeEventKeyDao().getActiveEventKey());
+            case "3":
+                return db.matchScheduleDao().getRed3(matchNumber, db.activeEventKeyDao().getActiveEventKey());
+            case "4":
+                return db.matchScheduleDao().getBlue1(matchNumber, db.activeEventKeyDao().getActiveEventKey());
+            case "5":
+                return db.matchScheduleDao().getBlue2(matchNumber, db.activeEventKeyDao().getActiveEventKey());
+            case "6":
+                return db.matchScheduleDao().getBlue3(matchNumber, db.activeEventKeyDao().getActiveEventKey());
+            default:
+                return "";
+        }
     }
 
     public void refreshScoutingTable() {
