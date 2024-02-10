@@ -91,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
     public void setEventKey() {
         String newEventKey = this.eventKeyEditText.getText().toString();
         db.activeEventKeyDao().setActiveEventKey(newEventKey);
+        checkToggleMatchSchedule();
     }
 
     public void toggleMatchSchedule() {

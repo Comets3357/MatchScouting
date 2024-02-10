@@ -21,8 +21,8 @@ public interface TeamMatchScoutDao {
     @Query("SELECT DISTINCT team_number, * FROM TeamMatchScout WHERE event_key = :eventKey")
     List<TeamMatchScout> getTeamsWithScoutedMatches(String eventKey);
 
-    @Query("SELECT COUNT(team_number) FROM TeamMatchScout WHERE event_key = :eventKey AND team_number = :teamNumber")
-    int getAlreadySubmitted(String teamNumber, String eventKey);
+    @Query("SELECT COUNT(team_number) FROM TeamMatchScout WHERE event_key = :eventKey AND team_number = :teamNumber AND match_number = :matchNumber")
+    int getAlreadySubmitted(String teamNumber, String eventKey, String matchNumber);
 
     @Query("SELECT * FROM TeamMatchScout WHERE event_key = :eventKey AND team_number = :teamNumber")
     List<TeamMatchScout> getMatchesScouted(String teamNumber, String eventKey);

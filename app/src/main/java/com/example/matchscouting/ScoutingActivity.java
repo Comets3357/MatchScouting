@@ -490,7 +490,7 @@ public class ScoutingActivity extends AppCompatActivity {
         matchData.setEvent(this.db.activeEventKeyDao().getActiveEventKey());
         matchData.setClimbStatus(getClimbNumber());
         matchData.setDefense(getDefenseNumber());
-        if (db.teamMatchScoutDao().getAlreadySubmitted(matchData.getTeamNumber(), matchData.getEvent()) > 0) {
+        if (db.teamMatchScoutDao().getAlreadySubmitted(matchData.getTeamNumber(), matchData.getEvent(), matchData.getMatchNumber()) > 0) {
             db.teamMatchScoutDao().update(matchData);
         } else {
             db.teamMatchScoutDao().insertAll(matchData);
