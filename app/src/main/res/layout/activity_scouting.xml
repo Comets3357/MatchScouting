@@ -139,8 +139,8 @@
         android:layout_height="40dp"
         android:background="@drawable/toggle_button_drawable"
         android:text="ToggleButton"
-        android:textOff="CLIMB 1"
-        android:textOn="CLIMB 1"
+        android:textOff="SOLO"
+        android:textOn="SOLO"
         app:layout_constraintBottom_toBottomOf="@+id/toggleBtnClimbTwo"
         app:layout_constraintEnd_toStartOf="@+id/toggleBtnClimbTwo" />
 
@@ -150,8 +150,8 @@
         android:layout_height="40dp"
         android:background="@drawable/toggle_button_drawable"
         android:text="ToggleButton"
-        android:textOff="CLIMB 2"
-        android:textOn="CLIMB 2"
+        android:textOff="DOUBLE"
+        android:textOn="DOUBLE"
         app:layout_constraintBottom_toBottomOf="@+id/toggleBtnClimbThree"
         app:layout_constraintEnd_toStartOf="@+id/toggleBtnClimbThree" />
 
@@ -162,8 +162,8 @@
         android:layout_marginEnd="32dp"
         android:background="@drawable/toggle_button_drawable"
         android:text="ToggleButton"
-        android:textOff="CLIMB 3"
-        android:textOn="CLIMB 3"
+        android:textOff="TRIPLE"
+        android:textOn="TRIPLE"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toggleBtnFailClimb" />
 
@@ -171,9 +171,9 @@
         android:id="@+id/textViewClimbing"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="63dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginBottom="16dp"
-        android:text="Climbing"
+        android:text="Climbing (Same Chain)"
         app:layout_constraintBottom_toTopOf="@+id/toggleBtnNoClimb"
         app:layout_constraintEnd_toEndOf="@+id/toggleBtnFailClimb" />
 
