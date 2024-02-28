@@ -32,6 +32,7 @@ public class ScoutingActivity extends AppCompatActivity {
     Button buttonAmpPlus;
     Button buttonAmpMinus;
     Button submitMatch;
+    Button refreshTeamNumber;
     ToggleButton toggleBtnNoClimb;
     ToggleButton toggleBtnFailClimb;
     ToggleButton toggleBtnClimb1;
@@ -105,6 +106,14 @@ public class ScoutingActivity extends AppCompatActivity {
                 } else {
                     addTeleSpeaker();
                 }
+            }
+        });
+
+        refreshTeamNumber = (Button) findViewById(R.id.btnRefreshTeamNumber);
+        refreshTeamNumber.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                textTeamNumber.setText(getTeamNumber(textMatchNumber.getText().toString(), textTablet.getText().toString()));
             }
         });
 
@@ -213,6 +222,7 @@ public class ScoutingActivity extends AppCompatActivity {
         textMatchNumber = (EditText) findViewById(R.id.editTextMatchNumber);
         textTablet = (EditText) findViewById(R.id.editTextTablet);
         if (db.activeEventKeyDao().getMatchScheduleKey().equals("1")) {
+            refreshTeamNumber.setVisibility(View.VISIBLE);
             textTeamNumber.setEnabled(false);
             this.textMatchNumber.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -236,6 +246,7 @@ public class ScoutingActivity extends AppCompatActivity {
                 }
             });
         } else {
+            refreshTeamNumber.setVisibility(View.GONE);
             textTeamNumber.setEnabled(true);
         }
 
