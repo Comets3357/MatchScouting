@@ -111,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
             }
         } else {
             enableMatchScheduleButton.setVisibility(View.INVISIBLE);
+            db.activeEventKeyDao().setMatchScheduleKey("0");
         }
     }
 
