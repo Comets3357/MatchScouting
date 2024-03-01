@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.matchscouting.common.Team;
 import com.example.matchscouting.common.TeamMatchScout;
 import com.google.gson.Gson;
 import com.google.zxing.BarcodeFormat;
@@ -186,11 +187,11 @@ public class QRTransferActivity extends AppCompatActivity {
     }
 
     public String[] getActiveEventKeys() {
-        List<TeamMatchScout> activeEventTeams = db.teamMatchScoutDao().getTeamsWithScoutedMatches(db.activeEventKeyDao().getActiveEventKey());
+        List<Team> activeEventTeams = db.teamDao().getTeamsWithScoutedMatches(db.activeEventKeyDao().getActiveEventKey());
         int numTeams = activeEventTeams.size();
         String[] teams = new String[numTeams];
         int i = 0;
-        for (TeamMatchScout team : activeEventTeams) {
+        for (Team team : activeEventTeams) {
             teams[i] = team.getTeamNumber();
             i++;
         }
