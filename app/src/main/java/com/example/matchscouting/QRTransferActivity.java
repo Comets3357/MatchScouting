@@ -27,6 +27,8 @@ import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class QRTransferActivity extends AppCompatActivity {
 
@@ -103,7 +105,6 @@ public class QRTransferActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent.hasExtra("teamNumber") && intent.hasExtra("matchNumber")) {
             this.teams.setSelection(getIndexForSpinner(this.teams, intent.getStringExtra("teamNumber")));
-            this.matches.setSelection(getIndexForSpinner(this.matches, intent.getStringExtra("matchNumber")));
             setQRCode();
             Button scoutMore = (Button) findViewById(R.id.buttonScoutMore);
             scoutMore.setVisibility(View.VISIBLE);
@@ -117,7 +118,6 @@ public class QRTransferActivity extends AppCompatActivity {
             Button scoutMore = (Button) findViewById(R.id.buttonScoutMore);
             scoutMore.setVisibility(View.GONE);
         }
-
     }
     private int getIndexForSpinner(Spinner spinner, String myString){
         for (int i=0;i<spinner.getCount();i++){

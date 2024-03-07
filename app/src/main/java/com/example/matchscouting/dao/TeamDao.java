@@ -23,6 +23,6 @@ public interface TeamDao {
     @Query("SELECT COUNT(team_name) FROM Team WHERE team_number = :team")
     int teamExists(String team);
 
-    @Query("SELECT * FROM Team WHERE team_number IN (SELECT DISTINCT team_number FROM TeamMatchScout WHERE event_key = :eventKey) ORDER BY team_number")
+    @Query("SELECT * FROM Team WHERE team_number IN (SELECT DISTINCT team_number FROM TeamMatchScout WHERE event_key = :eventKey) ORDER BY cast(team_number as int)")
     List<Team> getTeamsWithScoutedMatches(String eventKey);
 }
