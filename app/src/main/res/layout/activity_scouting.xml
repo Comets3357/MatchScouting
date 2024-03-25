@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     tools:context=".ScoutingActivity">
 
     <ToggleButton
@@ -21,7 +22,7 @@
     <Button
         android:id="@+id/btnSpeakerPlus"
         android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_height="150dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:backgroundTint="#FF5722"
@@ -34,7 +35,7 @@
     <Button
         android:id="@+id/btnAmpPlus"
         android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_height="150dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
         android:backgroundTint="#FF5722"
@@ -70,23 +71,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnAmpPlus" />
 
-    <Switch
-        android:id="@+id/switchLeaveAuto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="64dp"
-        android:text="Leave"
-        android:textSize="26dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnSpeakerMinus" />
-
     <Button
         android:id="@+id/btnTrapPlus"
         android:layout_width="200dp"
-        android:layout_height="150dp"
+        android:layout_height="125dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="24dp"
         android:backgroundTint="#FF5722"
         android:text="Trap +"
         android:textSize="26dp"
@@ -303,4 +293,30 @@
         android:text="↺"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnTelePassPlus"
+        android:layout_width="200dp"
+        android:layout_height="125dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
+        android:backgroundTint="#FF5722"
+        android:text="Pass +"
+        android:textSize="26dp"
+        app:cornerRadius="5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnTrapMinus" />
+
+    <Button
+        android:id="@+id/btnTelePassMinus"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#F44336"
+        android:text="Pass -"
+        android:textSize="26dp"
+        app:cornerRadius="5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnTelePassPlus" />
 </androidx.constraintlayout.widget.ConstraintLayout>

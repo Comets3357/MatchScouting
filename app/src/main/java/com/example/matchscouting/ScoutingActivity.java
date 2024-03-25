@@ -35,6 +35,8 @@ public class ScoutingActivity extends AppCompatActivity {
     Button buttonAmpMinus;
     Button submitMatch;
     Button refreshTeamNumber;
+    Button buttonPassPlus;
+    Button buttonPassMinus;
     ToggleButton toggleBtnNoClimb;
     ToggleButton toggleBtnFailClimb;
     ToggleButton toggleBtnClimb1;
@@ -44,7 +46,6 @@ public class ScoutingActivity extends AppCompatActivity {
     ToggleButton toggleButtonDefenseMeh;
     ToggleButton toggleButtonDefenseGood;
     ToggleButton toggleButtonDefenseEpic;
-    Switch switchLeaveAuto;
     TextView textViewClimbing;
     TextView textViewDefense;
     EditText textTeamNumber;
@@ -56,11 +57,13 @@ public class ScoutingActivity extends AppCompatActivity {
     int teleSpeaker;
     int teleAmp;
     int trap;
+    int telePass;
     boolean isAuto;
 
     final String speakerText = "Speaker +\n";
     final String ampText = "Amp +\n";
     final String trapText = "Trap +\n";
+    final String passText = "Pass +\n";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +75,7 @@ public class ScoutingActivity extends AppCompatActivity {
         this.autoAmp = 0;
         this.teleAmp = 0;
         this.trap = 0;
+        this.telePass = 0;
         this.isAuto = true;
         toggleAutoButton = (ToggleButton) findViewById(R.id.toggleAutoButton);
         toggleAutoButton.setOnClickListener(new View.OnClickListener() {
@@ -99,6 +103,22 @@ public class ScoutingActivity extends AppCompatActivity {
         buttonSpeakerMinus = (Button) findViewById(R.id.btnSpeakerMinus);
         buttonAmpPlus = (Button) findViewById(R.id.btnAmpPlus);
         buttonAmpMinus = (Button) findViewById(R.id.btnAmpMinus);
+        buttonPassPlus = (Button) findViewById(R.id.btnTelePassPlus);
+        buttonPassMinus = (Button) findViewById(R.id.btnTelePassMinus);
+
+        buttonPassPlus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addPass();
+            }
+        });
+
+        buttonPassMinus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                subPass();
+            }
+        });
 
         buttonSpeakerPlus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -187,7 +207,6 @@ public class ScoutingActivity extends AppCompatActivity {
                 toggleClimbs(4);
             }
         });
-        switchLeaveAuto = (Switch) findViewById(R.id.switchLeaveAuto);
 
         toggleBtnDefenseNone = (ToggleButton) findViewById(R.id.toggleBtnDefNone);
         toggleBtnDefenseNone.setOnClickListener(new View.OnClickListener() {
@@ -295,17 +314,20 @@ public class ScoutingActivity extends AppCompatActivity {
             toggleBtnClimb1.setVisibility(View.VISIBLE);
             toggleBtnClimb2.setVisibility(View.VISIBLE);
             toggleBtnClimb3.setVisibility(View.VISIBLE);
-            switchLeaveAuto.setVisibility(View.GONE);
             textViewDefense.setVisibility(View.VISIBLE);
             textViewClimbing.setVisibility(View.VISIBLE);
             toggleBtnDefenseNone.setVisibility(View.VISIBLE);
             toggleButtonDefenseMeh.setVisibility(View.VISIBLE);
             toggleButtonDefenseGood.setVisibility(View.VISIBLE);
             toggleButtonDefenseEpic.setVisibility(View.VISIBLE);
+            buttonPassMinus.setVisibility(View.VISIBLE);
+            buttonPassPlus.setVisibility(View.VISIBLE);
             String speakerText = this.speakerText+this.teleSpeaker;
             String ampText = this.ampText+this.teleAmp;
+            String passTextTele = this.passText+this.telePass;
             buttonSpeakerPlus.setText(speakerText);
             buttonAmpPlus.setText(ampText);
+            buttonPassPlus.setText(passTextTele);
 
         } else {
             this.isAuto = true;
@@ -322,9 +344,11 @@ public class ScoutingActivity extends AppCompatActivity {
             toggleButtonDefenseMeh.setVisibility(View.GONE);
             toggleButtonDefenseGood.setVisibility(View.GONE);
             toggleButtonDefenseEpic.setVisibility(View.GONE);
-            switchLeaveAuto.setVisibility(View.VISIBLE);
+            buttonPassMinus.setVisibility(View.GONE);
+            buttonPassPlus.setVisibility(View.GONE);
             String speakerText = this.speakerText+this.autoSpeaker;
             String ampText = this.ampText+this.autoAmp;
+
             buttonSpeakerPlus.setText(speakerText);
             buttonAmpPlus.setText(ampText);
         }
@@ -436,6 +460,20 @@ public class ScoutingActivity extends AppCompatActivity {
         }
     }
 
+    public void addPass() {
+        if (this.telePass < 30) {
+            this.telePass++;
+            refreshScoutingTable();
+        }
+    }
+
+    public void subPass() {
+        if (this.telePass > 0) {
+            this.telePass--;
+            refreshScoutingTable();
+        }
+    }
+
     public int getClimbNumber() {
         if (this.toggleBtnNoClimb.isChecked()) {
             return 0;
@@ -499,7 +537,7 @@ public class ScoutingActivity extends AppCompatActivity {
         matchData.setTeleSpeaker(this.teleSpeaker);
         matchData.setAutoAmp(this.autoAmp);
         matchData.setTeleAmp(this.teleAmp);
-        matchData.setAutoLeave(this.switchLeaveAuto.isChecked() ? 1 : 0);
+        matchData.setPass(this.telePass);
         matchData.setEvent(this.db.activeEventKeyDao().getActiveEventKey());
         matchData.setClimbStatus(getClimbNumber());
         matchData.setDefense(getDefenseNumber());
@@ -520,10 +558,10 @@ public class ScoutingActivity extends AppCompatActivity {
         this.autoSpeaker = 0;
         this.teleSpeaker = 0;
         this.teleAmp = 0;
+        this.telePass = 0;
         this.trap = 0;
         toggleClimbs(0);
         toggleDefense(0);
-        this.switchLeaveAuto.setChecked(false);
         this.textTeamNumber.setText("");
         int oldMatch = Integer.parseInt(this.textMatchNumber.getText().toString());
         String newMatchText = (oldMatch + 1) + "";

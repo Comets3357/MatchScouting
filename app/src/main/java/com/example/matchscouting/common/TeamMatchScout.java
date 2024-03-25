@@ -27,9 +27,6 @@ public class TeamMatchScout {
     @ColumnInfo(name="auto_amp")
     public int autoAmp;
 
-    @ColumnInfo(name="auto_leave")
-    public int autoLeave;
-
     @ColumnInfo(name="tele_speaker")
     public int teleSpeaker;
 
@@ -44,6 +41,9 @@ public class TeamMatchScout {
 
     @ColumnInfo(name="defense")
     public int defense;
+
+    @ColumnInfo(name="pass")
+    public int pass;
 
     @ColumnInfo(name="tablet")
     public String tablet;
