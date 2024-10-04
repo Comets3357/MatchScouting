@@ -1,8 +1,8 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 1,
-    "identityHash": "fd626116fa00719e4beafcc1d6f6e7ad",
+    "version": 4,
+    "identityHash": "a3ff37b6c6cfd58fae100a1af306fb5a",
     "entities": [
       {
         "tableName": "Team",
@@ -32,7 +32,7 @@
       },
       {
         "tableName": "TeamMatchScout",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`team_number` TEXT NOT NULL, `event_key` TEXT NOT NULL, `auto_speaker` INTEGER NOT NULL, `auto_amp` INTEGER NOT NULL, `auto_leave` INTEGER NOT NULL, `tele_speaker` INTEGER NOT NULL, `tele_amp` INTEGER NOT NULL, `trap` INTEGER NOT NULL, `climb_status` INTEGER NOT NULL, `defense` INTEGER NOT NULL, PRIMARY KEY(`team_number`, `event_key`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`team_number` TEXT NOT NULL, `event_key` TEXT NOT NULL, `match_number` TEXT NOT NULL, `auto_speaker` INTEGER NOT NULL, `auto_amp` INTEGER NOT NULL, `auto_leave` INTEGER NOT NULL, `tele_speaker` INTEGER NOT NULL, `tele_amp` INTEGER NOT NULL, `trap` INTEGER NOT NULL, `climb_status` INTEGER NOT NULL, `defense` INTEGER NOT NULL, `tablet` TEXT, `scouter` TEXT, PRIMARY KEY(`team_number`, `event_key`, `match_number`))",
         "fields": [
           {
             "fieldPath": "teamNumber",
@@ -43,6 +43,12 @@
           {
             "fieldPath": "event",
             "columnName": "event_key",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "matchNumber",
+            "columnName": "match_number",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -93,13 +99,26 @@
             "columnName": "defense",
             "affinity": "INTEGER",
             "notNull": true
+          },
+          {
+            "fieldPath": "tablet",
+            "columnName": "tablet",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "scouter",
+            "columnName": "scouter",
+            "affinity": "TEXT",
+            "notNull": false
           }
         ],
         "primaryKey": {
           "autoGenerate": false,
           "columnNames": [
             "team_number",
-            "event_key"
+            "event_key",
+            "match_number"
           ]
         },
         "indices": [],
@@ -135,7 +154,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'fd626116fa00719e4beafcc1d6f6e7ad')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a3ff37b6c6cfd58fae100a1af306fb5a')"
     ]
   }
 }

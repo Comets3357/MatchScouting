@@ -18,8 +18,14 @@ public interface TeamMatchScoutDao {
     @Query("SELECT * FROM TeamMatchScout WHERE event_key = :eventKey")
     List<TeamMatchScout> getAllMatchesAtEvent(String eventKey);
 
-    @Query("SELECT COUNT(team_number) FROM TeamMatchScout WHERE event_key = :eventKey AND team_number = :teamNumber")
-    int getAlreadySubmitted(String teamNumber, String eventKey);
+    @Query("SELECT COUNT(team_number) FROM TeamMatchScout WHERE event_key = :eventKey AND team_number = :teamNumber AND match_number = :matchNumber")
+    int getAlreadySubmitted(String teamNumber, String eventKey, String matchNumber);
+
+    @Query("SELECT * FROM TeamMatchScout WHERE event_key = :eventKey AND team_number = :teamNumber ORDER BY cast(match_number as int) DESC")
+    List<TeamMatchScout> getMatchesScouted(String teamNumber, String eventKey);
+
+    @Query("SELECT * FROM TeamMatchScout WHERE event_key = :eventKey AND team_number = :teamNumber AND match_number = :matchNumber")
+    TeamMatchScout getMatchScouted(String teamNumber, String matchNumber, String eventKey);
 
     @Insert
     void insertAll(TeamMatchScout... teamMatchScouts);
@@ -31,5 +37,8 @@ public interface TeamMatchScoutDao {
 
     @Update
     void update(TeamMatchScout teamPitScout);
+
+    @Query("SELECT count(match_number) FROM TeamMatchScout WHERE event_key = :eventKey AND team_number = :teamNumber")
+    int getMatchesPlayed(String teamNumber, String eventKey);
 
 }

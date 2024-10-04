@@ -4,15 +4,319 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     tools:context=".ScoutingActivity">
 
     <ToggleButton
-        android:id="@+id/toggleButton"
+        android:id="@+id/toggleAutoButton"
+        android:layout_width="100dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="32dp"
+        android:text="ToggleButton"
+        android:textOff="AUTO"
+        android:textOn="TELEOP"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnSpeakerPlus"
+        android:layout_width="200dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:backgroundTint="#FF5722"
+        android:text="Speaker +"
+        android:textSize="26sp"
+        app:cornerRadius="5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toggleAutoButton" />
+
+    <Button
+        android:id="@+id/btnAmpPlus"
+        android:layout_width="200dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:backgroundTint="#FF5722"
+        android:text="Amp +"
+        android:textSize="26dp"
+        app:cornerRadius="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toggleAutoButton" />
+
+    <Button
+        android:id="@+id/btnSpeakerMinus"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#F44336"
+        android:text="Speaker -"
+        android:textSize="26dp"
+        app:cornerRadius="5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnSpeakerPlus" />
+
+    <Button
+        android:id="@+id/btnAmpMinus"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:backgroundTint="#F44336"
+        android:text="Amp -"
+        android:textSize="26dp"
+        app:cornerRadius="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnAmpPlus" />
+
+    <Button
+        android:id="@+id/btnTrapPlus"
+        android:layout_width="200dp"
+        android:layout_height="125dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
+        android:backgroundTint="#FF5722"
+        android:text="Trap +"
+        android:textSize="26dp"
+        app:cornerRadius="5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnSpeakerMinus" />
+
+    <Button
+        android:id="@+id/btnTrapMinus"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#F44336"
+        android:text="Trap -"
+        android:textSize="26dp"
+        app:cornerRadius="5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnTrapPlus" />
+
+    <ToggleButton
+        android:id="@+id/toggleBtnNoClimb"
+        android:layout_width="90dp"
+        android:layout_height="40dp"
+        android:background="@drawable/toggle_button_drawable"
+        android:checked="true"
+        android:text="ToggleButton"
+        android:textOff="No Climb"
+        android:textOn="No Climb"
+        app:layout_constraintBottom_toBottomOf="@+id/toggleBtnFailClimb"
+        app:layout_constraintEnd_toStartOf="@+id/toggleBtnFailClimb" />
+
+    <ToggleButton
+        android:id="@+id/toggleBtnFailClimb"
+        android:layout_width="90dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="45dp"
+        android:background="@drawable/toggle_button_drawable"
+        android:text="ToggleButton"
+        android:textOff="FAIL"
+        android:textOn="FAIL"
+        app:layout_constraintBottom_toTopOf="@+id/toggleBtnClimbThree"
+        app:layout_constraintEnd_toEndOf="@+id/toggleBtnClimbThree"
+        app:layout_constraintTop_toBottomOf="@+id/btnAmpMinus" />
+
+    <ToggleButton
+        android:id="@+id/toggleBtnClimbOne"
+        android:layout_width="90dp"
+        android:layout_height="40dp"
+        android:background="@drawable/toggle_button_drawable"
+        android:text="ToggleButton"
+        android:textOff="SOLO"
+        android:textOn="SOLO"
+        app:layout_constraintBottom_toBottomOf="@+id/toggleBtnClimbTwo"
+        app:layout_constraintEnd_toStartOf="@+id/toggleBtnClimbTwo" />
+
+    <ToggleButton
+        android:id="@+id/toggleBtnClimbTwo"
+        android:layout_width="90dp"
+        android:layout_height="40dp"
+        android:background="@drawable/toggle_button_drawable"
+        android:text="ToggleButton"
+        android:textOff="DOUBLE"
+        android:textOn="DOUBLE"
+        app:layout_constraintBottom_toBottomOf="@+id/toggleBtnClimbThree"
+        app:layout_constraintEnd_toStartOf="@+id/toggleBtnClimbThree" />
+
+    <ToggleButton
+        android:id="@+id/toggleBtnClimbThree"
+        android:layout_width="90dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/toggle_button_drawable"
+        android:text="ToggleButton"
+        android:textOff="TRIPLE"
+        android:textOn="TRIPLE"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toggleBtnFailClimb" />
+
+    <TextView
+        android:id="@+id/textViewClimbing"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="16dp"
+        android:text="Climbing (Same Chain)"
+        app:layout_constraintBottom_toTopOf="@+id/toggleBtnNoClimb"
+        app:layout_constraintEnd_toEndOf="@+id/toggleBtnFailClimb" />
+
+    <ToggleButton
+        android:id="@+id/toggleBtnDefNone"
+        android:layout_width="90dp"
+        android:layout_height="40dp"
+        android:background="@drawable/toggle_button_drawable"
+        android:checked="true"
         android:text="ToggleButton"
+        android:textOff="NONE"
+        android:textOn="NONE"
+        app:layout_constraintBottom_toBottomOf="@+id/toggleBtnDefMeh"
+        app:layout_constraintEnd_toStartOf="@+id/toggleBtnDefMeh" />
+
+    <ToggleButton
+        android:id="@+id/toggleBtnDefMeh"
+        android:layout_width="90dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="77dp"
+        android:background="@drawable/toggle_button_drawable"
+        android:text="ToggleButton"
+        android:textOff="MEH"
+        android:textOn="MEH"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toggleBtnClimbTwo" />
+
+    <ToggleButton
+        android:id="@+id/toggleBtnDefGood"
+        android:layout_width="90dp"
+        android:layout_height="40dp"
+        android:background="@drawable/toggle_button_drawable"
+        android:text="ToggleButton"
+        android:textOff="GOOD"
+        android:textOn="GOOD"
+        app:layout_constraintStart_toStartOf="@+id/toggleBtnDefNone"
+        app:layout_constraintTop_toBottomOf="@+id/toggleBtnDefNone" />
+
+    <ToggleButton
+        android:id="@+id/toggleBtnDefEpic"
+        android:layout_width="90dp"
+        android:layout_height="40dp"
+        android:background="@drawable/toggle_button_drawable"
+        android:text="ToggleButton"
+        android:textOff="EPIC"
+        android:textOn="EPIC"
+        app:layout_constraintBottom_toBottomOf="@+id/toggleBtnDefGood"
+        app:layout_constraintStart_toEndOf="@+id/toggleBtnDefNone" />
+
+    <TextView
+        android:id="@+id/textViewDefense"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="142dp"
+        android:layout_marginBottom="16dp"
+        android:text="Defense"
+        app:layout_constraintBottom_toTopOf="@+id/toggleBtnDefMeh"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextTeamNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:ems="10"
+        android:hint="Team Number"
+        android:inputType="number"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextMatchNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="Match Number"
+        android:inputType="number"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTeamNumber" />
+
+    <EditText
+        android:id="@+id/editTextTablet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:ems="10"
+        android:hint="Tablet"
+        android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextScouter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:ems="10"
+        android:hint="Scouter"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTablet" />
+
+    <Button
+        android:id="@+id/buttonSubmit"
+        android:layout_width="200dp"
+        android:layout_height="75dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="#4CAF50"
+        android:text="Submit Match + Generate QR"
+        app:cornerRadius="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnRefreshTeamNumber"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="32dp"
+        android:text="↺"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnTelePassPlus"
+        android:layout_width="200dp"
+        android:layout_height="125dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
+        android:backgroundTint="#FF5722"
+        android:text="Pass +"
+        android:textSize="26dp"
+        app:cornerRadius="5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnTrapMinus" />
+
+    <Button
+        android:id="@+id/btnTelePassMinus"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#F44336"
+        android:text="Pass -"
+        android:textSize="26dp"
+        app:cornerRadius="5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnTelePassPlus" />
 </androidx.constraintlayout.widget.ConstraintLayout>
