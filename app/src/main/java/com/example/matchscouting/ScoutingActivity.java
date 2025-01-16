@@ -6,13 +6,10 @@ import androidx.appcompat.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Debug;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -20,62 +17,78 @@ import android.widget.ToggleButton;
 
 import com.example.matchscouting.common.TeamMatchScout;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 public class ScoutingActivity extends AppCompatActivity {
 
     AppDatabase db;
     ToggleButton toggleAutoButton;
-    Button btnTrapPlus;
-    Button btnTrapMinus;
-    Button buttonSpeakerPlus;
-    Button buttonSpeakerMinus;
-    Button buttonAmpPlus;
-    Button buttonAmpMinus;
+
+    Button buttonCoralL4;
+    Button buttonCoralL3;
+    Button buttonCoralL2;
+    Button buttonCoralL1;
+    Button buttonAlgaeL3;
+    Button buttonAlgaeL2;
+
+    Button buttonNetPlus;
+    Button buttonNetMinus;
+    Button buttonProcPlus;
+    Button buttonProcMinus;
     Button submitMatch;
     Button refreshTeamNumber;
     Button buttonPassPlus;
     Button buttonPassMinus;
     ToggleButton toggleBtnNoClimb;
-    ToggleButton toggleBtnFailClimb;
-    ToggleButton toggleBtnClimb1;
-    ToggleButton toggleBtnClimb2;
-    ToggleButton toggleBtnClimb3;
-    ToggleButton toggleBtnDefenseNone;
-    ToggleButton toggleButtonDefenseMeh;
-    ToggleButton toggleButtonDefenseGood;
-    ToggleButton toggleButtonDefenseEpic;
+    ToggleButton toggleBtnShallowClimb;
+    ToggleButton toggleBtnDeepClimb;
     TextView textViewClimbing;
-    TextView textViewDefense;
     EditText textTeamNumber;
     EditText textMatchNumber;
     EditText textScouter;
     EditText textTablet;
-    int autoSpeaker;
-    int autoAmp;
-    int teleSpeaker;
-    int teleAmp;
-    int trap;
-    int telePass;
+    int[] al4c;
+    int[] al3c;
+    int[] al2c;
+    int[] al1c;
+    int[] tl4c;
+    int[] tl3c;
+    int[] tl2c;
+    int[] tl1c;
+    int autoProc;
+    int teleProc;
+    int autoNet;
+    int teleNet;
+    int[] al3a;
+    int[] al2a;
+    int[] tl3a;
+    int[] tl2a;
+    boolean shallow;
+    boolean deep;
     boolean isAuto;
 
-    final String speakerText = "Speaker +\n";
-    final String ampText = "Amp +\n";
-    final String trapText = "Trap +\n";
-    final String passText = "Pass +\n";
+    final String processorText = "Processor +\n";
+    final String netText = "Net +\n";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scouting);
         this.db = AppDatabase.getDatabase(getApplicationContext());
-        this.autoSpeaker = 0;
-        this.teleSpeaker = 0;
-        this.autoAmp = 0;
-        this.teleAmp = 0;
-        this.trap = 0;
-        this.telePass = 0;
+        this.al4c = new int[6];
+        this.al3c = new int[6];
+        this.al2c = new int[6];
+        this.al1c = new int[6];
+        this.tl4c = new int[6];
+        this.tl3c = new int[6];
+        this.tl2c = new int[6];
+        this.tl1c = new int[6];
+        this.al3a = new int[3];
+        this.al2a = new int[3];
+        this.tl3a = new int[3];
+        this.tl2a = new int[3];
+        this.autoProc = 0;
+        this.teleProc = 0;
+        this.autoNet = 0;
+        this.teleNet = 0;
         this.isAuto = true;
         toggleAutoButton = (ToggleButton) findViewById(R.id.toggleAutoButton);
         toggleAutoButton.setOnClickListener(new View.OnClickListener() {
@@ -84,49 +97,25 @@ public class ScoutingActivity extends AppCompatActivity {
                 refreshScoutingTable();
             }
         });
-        btnTrapPlus = (Button) findViewById(R.id.btnTrapPlus);
-        btnTrapPlus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addTrap();
-            }
-        });
-        btnTrapMinus = (Button) findViewById(R.id.btnTrapMinus);
-        btnTrapMinus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                subTrap();
-            }
-        });
 
-        buttonSpeakerPlus = (Button) findViewById(R.id.btnSpeakerPlus);
-        buttonSpeakerMinus = (Button) findViewById(R.id.btnSpeakerMinus);
-        buttonAmpPlus = (Button) findViewById(R.id.btnAmpPlus);
-        buttonAmpMinus = (Button) findViewById(R.id.btnAmpMinus);
-        buttonPassPlus = (Button) findViewById(R.id.btnTelePassPlus);
-        buttonPassMinus = (Button) findViewById(R.id.btnTelePassMinus);
+        buttonCoralL4 = (Button) findViewById(R.id.btnCoralL4);
+        buttonCoralL3 = (Button) findViewById(R.id.btnCoralL3);
+        buttonCoralL2 = (Button) findViewById(R.id.btnCoralL2);
+        buttonCoralL1 = (Button) findViewById(R.id.btnCoralL1);
 
-        buttonPassPlus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addPass();
-            }
-        });
+        buttonNetPlus = (Button) findViewById(R.id.btnNetPlus);
+        buttonNetMinus = (Button) findViewById(R.id.btnNetMinus);
 
-        buttonPassMinus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                subPass();
-            }
-        });
+        buttonProcPlus = (Button) findViewById(R.id.btnProcPlus);
+        buttonProcMinus = (Button) findViewById(R.id.btnProcMinus);
 
-        buttonSpeakerPlus.setOnClickListener(new View.OnClickListener() {
+        buttonNetPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (isAuto) {
-                    addAutoSpeaker();
+                    addAutoNet();
                 } else {
-                    addTeleSpeaker();
+                    addTeleNet();
                 }
             }
         });
@@ -139,35 +128,35 @@ public class ScoutingActivity extends AppCompatActivity {
             }
         });
 
-        buttonSpeakerMinus.setOnClickListener(new View.OnClickListener() {
+        buttonNetMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (isAuto) {
-                    subAutoSpeaker();
+                    subAutoNet();
                 } else {
-                    subTeleSpeaker();
+                    subTeleNet();
                 }
             }
         });
 
-        buttonAmpPlus.setOnClickListener(new View.OnClickListener() {
+        buttonProcPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (isAuto) {
-                    addAutoAmp();
+                    addAutoProc();
                 } else {
-                    addTeleAmp();
+                    addTeleProc();
                 }
             }
         });
 
-        buttonAmpMinus.setOnClickListener(new View.OnClickListener() {
+        buttonProcMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (isAuto) {
-                    subAutoAmp();
+                    subAutoProc();
                 } else {
-                    subTeleAmp();
+                    subTeleProc();
                 }
             }
         });
@@ -179,65 +168,22 @@ public class ScoutingActivity extends AppCompatActivity {
                 toggleClimbs(0);
             }
         });
-        toggleBtnFailClimb = (ToggleButton) findViewById(R.id.toggleBtnFailClimb);
-        toggleBtnFailClimb.setOnClickListener(new View.OnClickListener() {
+        toggleBtnShallowClimb = (ToggleButton) findViewById(R.id.toggleBtnShallowClimb);
+        toggleBtnShallowClimb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 toggleClimbs(1);
             }
         });
-        toggleBtnClimb1 = (ToggleButton) findViewById(R.id.toggleBtnClimbOne);
-        toggleBtnClimb1.setOnClickListener(new View.OnClickListener() {
+        toggleBtnDeepClimb = (ToggleButton) findViewById(R.id.toggleBtnDeepClimb);
+        toggleBtnDeepClimb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 toggleClimbs(2);
             }
         });
-        toggleBtnClimb2 = (ToggleButton) findViewById(R.id.toggleBtnClimbTwo);
-        toggleBtnClimb2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                toggleClimbs(3);
-            }
-        });
-        toggleBtnClimb3 = (ToggleButton) findViewById(R.id.toggleBtnClimbThree);
-        toggleBtnClimb3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                toggleClimbs(4);
-            }
-        });
 
-        toggleBtnDefenseNone = (ToggleButton) findViewById(R.id.toggleBtnDefNone);
-        toggleBtnDefenseNone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                toggleDefense(0);
-            }
-        });
-        toggleButtonDefenseMeh = (ToggleButton) findViewById(R.id.toggleBtnDefMeh);
-        toggleButtonDefenseMeh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                toggleDefense(1);
-            }
-        });
-        toggleButtonDefenseGood = (ToggleButton) findViewById(R.id.toggleBtnDefGood);
-        toggleButtonDefenseGood.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                toggleDefense(2);
-            }
-        });
-        toggleButtonDefenseEpic = (ToggleButton) findViewById(R.id.toggleBtnDefEpic);
-        toggleButtonDefenseEpic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                toggleDefense(3);
-            }
-        });
         textViewClimbing = (TextView) findViewById(R.id.textViewClimbing);
-        textViewDefense = (TextView) findViewById(R.id.textViewDefense);
 
         textTeamNumber = (EditText) findViewById(R.id.editTextTeamNumber);
         textMatchNumber = (EditText) findViewById(R.id.editTextMatchNumber);
@@ -307,53 +253,26 @@ public class ScoutingActivity extends AppCompatActivity {
     public void refreshScoutingTable() {
         if (toggleAutoButton.isChecked()) {
             this.isAuto = false;
-            btnTrapPlus.setVisibility(View.VISIBLE);
-            btnTrapMinus.setVisibility(View.VISIBLE);
             toggleBtnNoClimb.setVisibility(View.VISIBLE);
-            toggleBtnFailClimb.setVisibility(View.VISIBLE);
-            toggleBtnClimb1.setVisibility(View.VISIBLE);
-            toggleBtnClimb2.setVisibility(View.VISIBLE);
-            toggleBtnClimb3.setVisibility(View.VISIBLE);
-            textViewDefense.setVisibility(View.VISIBLE);
+            toggleBtnShallowClimb.setVisibility(View.VISIBLE);
+            toggleBtnDeepClimb.setVisibility(View.VISIBLE);
             textViewClimbing.setVisibility(View.VISIBLE);
-            toggleBtnDefenseNone.setVisibility(View.VISIBLE);
-            toggleButtonDefenseMeh.setVisibility(View.VISIBLE);
-            toggleButtonDefenseGood.setVisibility(View.VISIBLE);
-            toggleButtonDefenseEpic.setVisibility(View.VISIBLE);
-            buttonPassMinus.setVisibility(View.VISIBLE);
-            buttonPassPlus.setVisibility(View.VISIBLE);
-            String speakerText = this.speakerText+this.teleSpeaker;
-            String ampText = this.ampText+this.teleAmp;
-            String passTextTele = this.passText+this.telePass;
-            buttonSpeakerPlus.setText(speakerText);
-            buttonAmpPlus.setText(ampText);
-            buttonPassPlus.setText(passTextTele);
-
+            String processorText = this.processorText +this.teleProc;
+            String netText = this.netText +this.teleNet;
+            buttonNetPlus.setText(netText);
+            buttonProcPlus.setText(processorText);
         } else {
             this.isAuto = true;
-            btnTrapPlus.setVisibility(View.GONE);
-            btnTrapMinus.setVisibility(View.GONE);
             toggleBtnNoClimb.setVisibility(View.GONE);
-            toggleBtnFailClimb.setVisibility(View.GONE);
-            toggleBtnClimb1.setVisibility(View.GONE);
-            toggleBtnClimb2.setVisibility(View.GONE);
-            toggleBtnClimb3.setVisibility(View.GONE);
-            textViewDefense.setVisibility(View.GONE);
+            toggleBtnShallowClimb.setVisibility(View.GONE);
+            toggleBtnDeepClimb.setVisibility(View.GONE);
             textViewClimbing.setVisibility(View.GONE);
-            toggleBtnDefenseNone.setVisibility(View.GONE);
-            toggleButtonDefenseMeh.setVisibility(View.GONE);
-            toggleButtonDefenseGood.setVisibility(View.GONE);
-            toggleButtonDefenseEpic.setVisibility(View.GONE);
-            buttonPassMinus.setVisibility(View.GONE);
-            buttonPassPlus.setVisibility(View.GONE);
-            String speakerText = this.speakerText+this.autoSpeaker;
-            String ampText = this.ampText+this.autoAmp;
+            String processorText = this.processorText +this.autoProc;
+            String netText = this.netText +this.autoNet;
 
-            buttonSpeakerPlus.setText(speakerText);
-            buttonAmpPlus.setText(ampText);
+            buttonNetPlus.setText(netText);
+            buttonProcPlus.setText(processorText);
         }
-        String trapText = this.trapText+this.trap;
-        this.btnTrapPlus.setText(trapText);
     }
     public void toggleClimbs(int buttonPressed) {
         if (buttonPressed != 0) {
@@ -362,114 +281,69 @@ public class ScoutingActivity extends AppCompatActivity {
             toggleBtnNoClimb.setChecked(true);
         }
         if (buttonPressed != 1) {
-            toggleBtnFailClimb.setChecked(false);
+            toggleBtnShallowClimb.setChecked(false);
         } else {
-            toggleBtnFailClimb.setChecked(true);
+            toggleBtnShallowClimb.setChecked(true);
         }
         if (buttonPressed != 2) {
-            toggleBtnClimb1.setChecked(false);
+            toggleBtnDeepClimb.setChecked(false);
         } else {
-            toggleBtnClimb1.setChecked(true);
-        }
-        if (buttonPressed != 3) {
-            toggleBtnClimb2.setChecked(false);
-        } else {
-            toggleBtnClimb2.setChecked(true);
-        }
-        if (buttonPressed != 4) {
-            toggleBtnClimb3.setChecked(false);
-        } else {
-            toggleBtnClimb3.setChecked(true);
+            toggleBtnDeepClimb.setChecked(true);
         }
     }
 
-    public void toggleDefense(int defenseScore) {
-        toggleBtnDefenseNone.setChecked(defenseScore == 0);
-        toggleButtonDefenseMeh.setChecked(defenseScore == 1);
-        toggleButtonDefenseGood.setChecked(defenseScore == 2);
-        toggleButtonDefenseEpic.setChecked(defenseScore == 3);
-    }
-
-    public void addAutoSpeaker() {
-        if (this.autoSpeaker < 10) {
-            this.autoSpeaker++;
+    public void addAutoNet() {
+        if (this.autoNet < 9) {
+            this.autoNet++;
             refreshScoutingTable();
         }
     }
 
-    public void addAutoAmp() {
-        if (this.autoAmp < 10) {
-            this.autoAmp++;
+    public void addAutoProc() {
+        if (this.autoProc < 9) {
+            this.autoProc++;
             refreshScoutingTable();
         }
     }
 
-    public void subAutoSpeaker() {
-        if (this.autoSpeaker > 0) {
-            this.autoSpeaker--;
+    public void subAutoNet() {
+        if (this.autoNet > 0) {
+            this.autoNet--;
             refreshScoutingTable();
         }
     }
 
-    public void subAutoAmp() {
-        if (this.autoAmp > 0) {
-            this.autoAmp--;
+    public void subAutoProc() {
+        if (this.autoProc > 0) {
+            this.autoProc--;
             refreshScoutingTable();
         }
     }
 
-    public void addTeleSpeaker() {
-        if (this.teleSpeaker < 30) {
-            this.teleSpeaker++;
+    public void addTeleNet() {
+        if (this.teleNet < 18) {
+            this.teleNet++;
             refreshScoutingTable();
         }
     }
 
-    public void subTeleSpeaker() {
-        if (this.teleSpeaker > 0) {
-            this.teleSpeaker--;
+    public void subTeleNet() {
+        if (this.teleNet > 0) {
+            this.teleNet--;
             refreshScoutingTable();
         }
     }
 
-    public void addTeleAmp() {
-        if (this.teleAmp < 30) {
-            this.teleAmp++;
+    public void addTeleProc() {
+        if (this.teleProc < 18) {
+            this.teleProc++;
             refreshScoutingTable();
         }
     }
 
-    public void subTeleAmp() {
-        if (this.teleAmp > 0) {
-            this.teleAmp--;
-            refreshScoutingTable();
-        }
-    }
-
-    public void addTrap() {
-        if (this.trap < 3) {
-            this.trap++;
-            refreshScoutingTable();
-        }
-    }
-
-    public void subTrap() {
-        if (this.trap > 0) {
-            this.trap--;
-            refreshScoutingTable();
-        }
-    }
-
-    public void addPass() {
-        if (this.telePass < 30) {
-            this.telePass++;
-            refreshScoutingTable();
-        }
-    }
-
-    public void subPass() {
-        if (this.telePass > 0) {
-            this.telePass--;
+    public void subTeleProc() {
+        if (this.teleProc > 0) {
+            this.teleProc--;
             refreshScoutingTable();
         }
     }
@@ -478,32 +352,13 @@ public class ScoutingActivity extends AppCompatActivity {
         if (this.toggleBtnNoClimb.isChecked()) {
             return 0;
         }
-        if (this.toggleBtnFailClimb.isChecked()) {
-            return -1;
-        }
-        if (this.toggleBtnClimb1.isChecked()) {
+        if (this.toggleBtnShallowClimb.isChecked()) {
             return 1;
         }
-        if (this.toggleBtnClimb2.isChecked()) {
+        if (this.toggleBtnDeepClimb.isChecked()) {
             return 2;
-        }
-        if (this.toggleBtnClimb3.isChecked()) {
-            return 3;
         }
         return 0;
-    }
-
-    public int getDefenseNumber() {
-        if (this.toggleBtnDefenseNone.isChecked()) {
-            return 0;
-        } else if (this.toggleButtonDefenseMeh.isChecked()) {
-            return 1;
-        } else if (this.toggleButtonDefenseGood.isChecked()) {
-            return 2;
-        } else if (this.toggleButtonDefenseEpic.isChecked()) {
-            return 3;
-        }
-        return -1;
     }
 
     public void submitMatch() {
@@ -532,15 +387,9 @@ public class ScoutingActivity extends AppCompatActivity {
         matchData.setMatchNumber(this.textMatchNumber.getText().toString());
         matchData.setTablet(this.textTablet.getText().toString());
         matchData.setScouter(this.textScouter.getText().toString());
-        matchData.setTrap(this.trap);
-        matchData.setAutoSpeaker(this.autoSpeaker);
-        matchData.setTeleSpeaker(this.teleSpeaker);
-        matchData.setAutoAmp(this.autoAmp);
-        matchData.setTeleAmp(this.teleAmp);
-        matchData.setPass(this.telePass);
+        //todo: add gamespec
         matchData.setEvent(this.db.activeEventKeyDao().getActiveEventKey());
-        matchData.setClimbStatus(getClimbNumber());
-        matchData.setDefense(getDefenseNumber());
+        matchData.setEndgame(""+getClimbNumber());
         if (db.teamMatchScoutDao().getAlreadySubmitted(matchData.getTeamNumber(), matchData.getEvent(), matchData.getMatchNumber()) > 0) {
             db.teamMatchScoutDao().update(matchData);
         } else {
@@ -554,14 +403,23 @@ public class ScoutingActivity extends AppCompatActivity {
     }
 
     public void resetMatch() {
-        this.autoAmp = 0;
-        this.autoSpeaker = 0;
-        this.teleSpeaker = 0;
-        this.teleAmp = 0;
-        this.telePass = 0;
-        this.trap = 0;
+        this.al4c = new int[6];
+        this.al3c = new int[6];
+        this.al2c = new int[6];
+        this.al1c = new int[6];
+        this.tl4c = new int[6];
+        this.tl3c = new int[6];
+        this.tl2c = new int[6];
+        this.tl1c = new int[6];
+        this.al3a = new int[3];
+        this.al2a = new int[3];
+        this.tl3a = new int[3];
+        this.tl2a = new int[3];
+        this.autoProc = 0;
+        this.teleProc = 0;
+        this.autoNet = 0;
+        this.teleNet = 0;
         toggleClimbs(0);
-        toggleDefense(0);
         this.textTeamNumber.setText("");
         int oldMatch = Integer.parseInt(this.textMatchNumber.getText().toString());
         String newMatchText = (oldMatch + 1) + "";

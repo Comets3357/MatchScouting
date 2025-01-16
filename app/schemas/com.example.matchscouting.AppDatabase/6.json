@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 6,
-    "identityHash": "60bdd63f66af00df527858497b6773f9",
+    "identityHash": "79df7839cfa2a93ddfe078825afba0f2",
     "entities": [
       {
         "tableName": "Team",
@@ -32,7 +32,7 @@
       },
       {
         "tableName": "TeamMatchScout",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`team_number` TEXT NOT NULL, `event_key` TEXT NOT NULL, `match_number` TEXT NOT NULL, `auto_speaker` INTEGER NOT NULL, `auto_amp` INTEGER NOT NULL, `tele_speaker` INTEGER NOT NULL, `tele_amp` INTEGER NOT NULL, `trap` INTEGER NOT NULL, `climb_status` INTEGER NOT NULL, `defense` INTEGER NOT NULL, `pass` INTEGER NOT NULL, `tablet` TEXT, `scouter` TEXT, PRIMARY KEY(`team_number`, `event_key`, `match_number`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`team_number` TEXT NOT NULL, `event_key` TEXT NOT NULL, `match_number` TEXT NOT NULL, `auto_l4_coral` TEXT, `auto_l3_coral` TEXT, `auto_l2_coral` TEXT, `auto_l1_coral` TEXT, `tele_l4_coral` TEXT, `tele_l3_coral` TEXT, `tele_l2_coral` TEXT, `tele_l1_coral` TEXT, `auto_net` INTEGER NOT NULL, `tele_net` INTEGER NOT NULL, `auto_proc` INTEGER NOT NULL, `tele_proc` INTEGER NOT NULL, `auto_l3_algae` TEXT, `auto_l2_algae` TEXT, `tele_l3_algae` TEXT, `tele_l2_algae` TEXT, `endgame` TEXT, `tablet` TEXT, `scouter` TEXT, PRIMARY KEY(`team_number`, `event_key`, `match_number`))",
         "fields": [
           {
             "fieldPath": "teamNumber",
@@ -53,52 +53,106 @@
             "notNull": true
           },
           {
-            "fieldPath": "autoSpeaker",
-            "columnName": "auto_speaker",
+            "fieldPath": "autoL4Coral",
+            "columnName": "auto_l4_coral",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "autoL3Coral",
+            "columnName": "auto_l3_coral",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "autoL2Coral",
+            "columnName": "auto_l2_coral",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "autoL1Coral",
+            "columnName": "auto_l1_coral",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "teleL4Coral",
+            "columnName": "tele_l4_coral",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "teleL3Coral",
+            "columnName": "tele_l3_coral",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "teleL2Coral",
+            "columnName": "tele_l2_coral",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "teleL1Coral",
+            "columnName": "tele_l1_coral",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "autoNet",
+            "columnName": "auto_net",
             "affinity": "INTEGER",
             "notNull": true
           },
           {
-            "fieldPath": "autoAmp",
-            "columnName": "auto_amp",
+            "fieldPath": "teleNet",
+            "columnName": "tele_net",
             "affinity": "INTEGER",
             "notNull": true
           },
           {
-            "fieldPath": "teleSpeaker",
-            "columnName": "tele_speaker",
+            "fieldPath": "autoProcessor",
+            "columnName": "auto_proc",
             "affinity": "INTEGER",
             "notNull": true
           },
           {
-            "fieldPath": "teleAmp",
-            "columnName": "tele_amp",
+            "fieldPath": "teleProcessor",
+            "columnName": "tele_proc",
             "affinity": "INTEGER",
             "notNull": true
           },
           {
-            "fieldPath": "trap",
-            "columnName": "trap",
-            "affinity": "INTEGER",
-            "notNull": true
+            "fieldPath": "autoL3Algae",
+            "columnName": "auto_l3_algae",
+            "affinity": "TEXT",
+            "notNull": false
           },
           {
-            "fieldPath": "climbStatus",
-            "columnName": "climb_status",
-            "affinity": "INTEGER",
-            "notNull": true
+            "fieldPath": "autoL2Algae",
+            "columnName": "auto_l2_algae",
+            "affinity": "TEXT",
+            "notNull": false
           },
           {
-            "fieldPath": "defense",
-            "columnName": "defense",
-            "affinity": "INTEGER",
-            "notNull": true
+            "fieldPath": "teleL3Algae",
+            "columnName": "tele_l3_algae",
+            "affinity": "TEXT",
+            "notNull": false
           },
           {
-            "fieldPath": "pass",
-            "columnName": "pass",
-            "affinity": "INTEGER",
-            "notNull": true
+            "fieldPath": "teleL2Algae",
+            "columnName": "tele_l2_algae",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "endgame",
+            "columnName": "endgame",
+            "affinity": "TEXT",
+            "notNull": false
           },
           {
             "fieldPath": "tablet",
@@ -217,7 +271,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '60bdd63f66af00df527858497b6773f9')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '79df7839cfa2a93ddfe078825afba0f2')"
     ]
   }
 }
