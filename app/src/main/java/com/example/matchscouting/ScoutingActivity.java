@@ -20,15 +20,14 @@ import com.example.matchscouting.common.TeamMatchScout;
 public class ScoutingActivity extends AppCompatActivity {
 
     AppDatabase db;
-    ToggleButton toggleAutoButton;
 
+    ToggleButton toggleAutoButton;
     Button buttonCoralL4;
     Button buttonCoralL3;
     Button buttonCoralL2;
     Button buttonCoralL1;
     Button buttonAlgaeL3;
     Button buttonAlgaeL2;
-
     Button buttonNetPlus;
     Button buttonNetMinus;
     Button buttonProcPlus;
@@ -45,6 +44,7 @@ public class ScoutingActivity extends AppCompatActivity {
     EditText textMatchNumber;
     EditText textScouter;
     EditText textTablet;
+
     int[] al4c;
     int[] al3c;
     int[] al2c;
@@ -61,8 +61,6 @@ public class ScoutingActivity extends AppCompatActivity {
     int[] al2a;
     int[] tl3a;
     int[] tl2a;
-    boolean shallow;
-    boolean deep;
     boolean isAuto;
 
     final String processorText = "Processor +\n";
@@ -388,6 +386,73 @@ public class ScoutingActivity extends AppCompatActivity {
         matchData.setTablet(this.textTablet.getText().toString());
         matchData.setScouter(this.textScouter.getText().toString());
         //todo: add gamespec
+        StringBuilder sb = new StringBuilder();
+        for (int i : this.al4c) {
+            sb.append(i);
+        }
+        matchData.setAutoL4Coral(sb.toString());
+        sb = new StringBuilder();
+        for (int i : this.al3c) {
+            sb.append(i);
+        }
+        matchData.setAutoL3Coral(sb.toString());
+        sb = new StringBuilder();
+        for (int i : this.al2c) {
+            sb.append(i);
+        }
+        matchData.setAutoL2Coral(sb.toString());
+        sb = new StringBuilder();
+        for (int i : this.al1c) {
+            sb.append(i);
+        }
+        matchData.setAutoL1Coral(sb.toString());
+        sb = new StringBuilder();
+        for (int i : this.tl4c) {
+            sb.append(i);
+        }
+        matchData.setTeleL4Coral(sb.toString());
+        sb = new StringBuilder();
+        for (int i : this.tl3c) {
+            sb.append(i);
+        }
+        matchData.setTeleL3Coral(sb.toString());
+        sb = new StringBuilder();
+        for (int i : this.tl2c) {
+            sb.append(i);
+        }
+        matchData.setTeleL2Coral(sb.toString());
+        sb = new StringBuilder();
+        for (int i : this.tl1c) {
+            sb.append(i);
+        }
+        matchData.setTeleL1Coral(sb.toString());
+        sb = new StringBuilder();
+        for (int i : this.al3a) {
+            sb.append(i);
+        }
+        matchData.setAutoL3Algae(sb.toString());
+        sb = new StringBuilder();
+        for (int i : this.al2a) {
+            sb.append(i);
+        }
+        matchData.setAutoL2Algae(sb.toString());
+        sb = new StringBuilder();
+        for (int i : this.tl3a) {
+            sb.append(i);
+        }
+        matchData.setTeleL3Algae(sb.toString());
+        sb = new StringBuilder();
+        for (int i : this.tl2a) {
+            sb.append(i);
+        }
+        matchData.setTeleL2Algae(sb.toString());
+        matchData.setAutoNet(this.autoNet);
+        matchData.setTeleNet(this.teleNet);
+        matchData.setAutoProcessor(this.autoProc);
+        matchData.setTeleProcessor(this.teleProc);
+        matchData.setEndgame(getClimbNumber());
+
+        matchData.setTeleL1Coral(sb.toString());
         matchData.setEvent(this.db.activeEventKeyDao().getActiveEventKey());
         matchData.setEndgame(""+getClimbNumber());
         if (db.teamMatchScoutDao().getAlreadySubmitted(matchData.getTeamNumber(), matchData.getEvent(), matchData.getMatchNumber()) > 0) {
