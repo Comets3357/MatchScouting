@@ -37,7 +37,6 @@
         android:layout_width="180dp"
         android:layout_height="130dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="48dp"
         android:layout_marginEnd="16dp"
         android:backgroundTint="#FF5722"
         android:text="Algae L3"
@@ -45,7 +44,7 @@
         app:cornerRadius="5dp"
         app:layout_constraintEnd_toStartOf="@+id/btnProcPlus"
         app:layout_constraintStart_toEndOf="@+id/btnCoralL4"
-        app:layout_constraintTop_toBottomOf="@+id/toggleAutoButton" />
+        app:layout_constraintTop_toTopOf="@+id/btnCoralL3" />
 
     <Button
         android:id="@+id/btnAlgaeL2"
@@ -171,23 +170,23 @@
         android:layout_width="130dp"
         android:layout_height="40dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
         android:background="@drawable/toggle_button_drawable"
         android:text="ToggleButton"
         android:textOff="DEEP"
         android:textOn="DEEP"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/btnNetPlus"
+        app:layout_constraintStart_toStartOf="@+id/btnNetPlus"
         app:layout_constraintTop_toBottomOf="@+id/toggleBtnShallowClimb" />
 
     <TextView
         android:id="@+id/textViewClimbing"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="38dp"
         android:layout_marginBottom="16dp"
         android:text="Climbing"
         app:layout_constraintBottom_toTopOf="@+id/toggleBtnShallowClimb"
-        app:layout_constraintEnd_toEndOf="@+id/toggleBtnShallowClimb" />
+        app:layout_constraintEnd_toEndOf="@+id/toggleBtnShallowClimb"
+        app:layout_constraintStart_toStartOf="@+id/toggleBtnShallowClimb" />
 
     <EditText
         android:id="@+id/editTextTeamNumber"
@@ -271,5 +270,15 @@
         app:cornerRadius="5dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnCoralL3" />
+
+    <TextView
+        android:id="@+id/textViewAlgaeRemoval"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="Algae Removal"
+        app:layout_constraintBottom_toTopOf="@+id/btnAlgaeL3"
+        app:layout_constraintEnd_toEndOf="@+id/btnAlgaeL3"
+        app:layout_constraintStart_toStartOf="@+id/btnAlgaeL3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

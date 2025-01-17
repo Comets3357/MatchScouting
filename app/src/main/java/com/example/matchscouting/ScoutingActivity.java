@@ -450,7 +450,7 @@ public class ScoutingActivity extends AppCompatActivity {
         matchData.setTeleNet(this.teleNet);
         matchData.setAutoProcessor(this.autoProc);
         matchData.setTeleProcessor(this.teleProc);
-        matchData.setEndgame(getClimbNumber());
+        matchData.setEndgame(""+getClimbNumber());
 
         matchData.setTeleL1Coral(sb.toString());
         matchData.setEvent(this.db.activeEventKeyDao().getActiveEventKey());
