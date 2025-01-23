@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.example.matchscouting.common.ScoringPosition;
 import com.example.matchscouting.common.TeamMatchScout;
 
 public class ScoutingActivity extends AppCompatActivity {
@@ -36,6 +37,18 @@ public class ScoutingActivity extends AppCompatActivity {
     Button refreshTeamNumber;
     Button buttonPassPlus;
     Button buttonPassMinus;
+    Button buttonCoralTL;
+    Button buttonCoralTR;
+    Button buttonCoralML;
+    Button buttonCoralMR;
+    Button buttonCoralBL;
+    Button buttonCoralBR;
+    Button buttonSubCoralTL;
+    Button buttonSubCoralTR;
+    Button buttonSubCoralML;
+    Button buttonSubCoralMR;
+    Button buttonSubCoralBL;
+    Button buttonSubCoralBR;
     ToggleButton toggleBtnNoClimb;
     ToggleButton toggleBtnShallowClimb;
     ToggleButton toggleBtnDeepClimb;
@@ -61,7 +74,10 @@ public class ScoutingActivity extends AppCompatActivity {
     int[] al2a;
     int[] tl3a;
     int[] tl2a;
+    int currLevel;
     boolean isAuto;
+    boolean isRed;
+    boolean scoringTable;
 
     final String processorText = "Processor +\n";
     final String netText = "Net +\n";
@@ -87,6 +103,7 @@ public class ScoutingActivity extends AppCompatActivity {
         this.teleProc = 0;
         this.autoNet = 0;
         this.teleNet = 0;
+        this.currLevel = 0;
         this.isAuto = true;
         toggleAutoButton = (ToggleButton) findViewById(R.id.toggleAutoButton);
         toggleAutoButton.setOnClickListener(new View.OnClickListener() {
@@ -106,6 +123,20 @@ public class ScoutingActivity extends AppCompatActivity {
 
         buttonProcPlus = (Button) findViewById(R.id.btnProcPlus);
         buttonProcMinus = (Button) findViewById(R.id.btnProcMinus);
+
+        buttonCoralTL = (Button) findViewById(R.id.buttonAddTLCoral);
+        buttonCoralTR = (Button) findViewById(R.id.buttonAddTRCoral);
+        buttonCoralML = (Button) findViewById(R.id.buttonAddMLCoral);
+        buttonCoralMR = (Button) findViewById(R.id.buttonAddMRCoral);
+        buttonCoralBL = (Button) findViewById(R.id.buttonAddBLCoral);
+        buttonCoralBR = (Button) findViewById(R.id.buttonAddBRCoral);
+
+        buttonSubCoralTL = (Button) findViewById(R.id.buttonSubTLCoral);
+        buttonSubCoralTR = (Button) findViewById(R.id.buttonSubTRCoral);
+        buttonSubCoralML = (Button) findViewById(R.id.buttonSubMLCoral);
+        buttonSubCoralMR = (Button) findViewById(R.id.buttonSubMRCoral);
+        buttonSubCoralBL = (Button) findViewById(R.id.buttonSubBLCoral);
+        buttonSubCoralBR = (Button) findViewById(R.id.buttonSubBRCoral);
 
         buttonNetPlus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -156,6 +187,13 @@ public class ScoutingActivity extends AppCompatActivity {
                 } else {
                     subTeleProc();
                 }
+            }
+        });
+
+        buttonCoralTL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
             }
         });
 
@@ -346,6 +384,116 @@ public class ScoutingActivity extends AppCompatActivity {
         }
     }
 
+    public void addCoral(ScoringPosition scoringPosition, boolean red, boolean scoringTable) {
+        int index = scoringPosition.getArrayPos(red, scoringTable);
+        if (isAuto) {
+            switch(currLevel) {
+                case 1:
+                    if (this.al1c[index] < 2) {
+                        al1c[index]++;
+                    }
+                    break;
+                case 2:
+                    if (this.al2c[index] < 2) {
+                        al2c[index]++;
+                    }
+                    break;
+                case 3:
+                    if (this.al3c[index] < 2) {
+                        al3c[index]++;
+                    }
+                    break;
+                case 4:
+                    if (this.al4c[index] < 2) {
+                        al4c[index]++;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            switch(currLevel) {
+                case 1:
+                    if (this.tl1c[index] < 2) {
+                        tl1c[index]++;
+                    }
+                    break;
+                case 2:
+                    if (this.tl2c[index] < 2) {
+                        tl2c[index]++;
+                    }
+                    break;
+                case 3:
+                    if (this.tl3c[index] < 2) {
+                        tl3c[index]++;
+                    }
+                    break;
+                case 4:
+                    if (this.tl4c[index] < 2) {
+                        tl4c[index]++;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    public void subCoral(ScoringPosition scoringPosition) {
+        int index = scoringPosition.getArrayPos(isRed, scoringTable);
+        if (isAuto) {
+            switch(currLevel) {
+                case 1:
+                    if (this.al1c[index] > 0) {
+                        al1c[index]--;
+                    }
+                    break;
+                case 2:
+                    if (this.al2c[index] > 0) {
+                        al2c[index]--;
+                    }
+                    break;
+                case 3:
+                    if (this.al3c[index] > 0) {
+                        al3c[index]--;
+                    }
+                    break;
+                case 4:
+                    if (this.al4c[index] > 0) {
+                        al4c[index]--;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            switch(currLevel) {
+                case 1:
+                    if (this.tl1c[index] > 0) {
+                        tl1c[index]--;
+                    }
+                    break;
+                case 2:
+                    if (this.tl2c[index] > 0) {
+                        tl2c[index]--;
+                    }
+                    break;
+                case 3:
+                    if (this.tl3c[index] > 0) {
+                        tl3c[index]--;
+                    }
+                    break;
+                case 4:
+                    if (this.tl4c[index] > 0) {
+                        tl4c[index]--;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
     public int getClimbNumber() {
         if (this.toggleBtnNoClimb.isChecked()) {
             return 0;
@@ -451,8 +599,6 @@ public class ScoutingActivity extends AppCompatActivity {
         matchData.setAutoProcessor(this.autoProc);
         matchData.setTeleProcessor(this.teleProc);
         matchData.setEndgame(""+getClimbNumber());
-
-        matchData.setTeleL1Coral(sb.toString());
         matchData.setEvent(this.db.activeEventKeyDao().getActiveEventKey());
         matchData.setEndgame(""+getClimbNumber());
         if (db.teamMatchScoutDao().getAlreadySubmitted(matchData.getTeamNumber(), matchData.getEvent(), matchData.getMatchNumber()) > 0) {
