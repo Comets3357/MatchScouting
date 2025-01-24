@@ -31,7 +31,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/buttonAddTLCoral"
+        android:id="@+id/buttonAddTLAlgae"
         android:layout_width="110dp"
         android:layout_height="110dp"
         android:layout_marginStart="75dp"
@@ -42,7 +42,7 @@
         app:layout_constraintTop_toTopOf="@+id/imageView" />
 
     <Button
-        android:id="@+id/buttonSubTLCoral"
+        android:id="@+id/buttonSubTLAlgae"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginStart="8dp"
@@ -55,31 +55,7 @@
         app:layout_constraintStart_toStartOf="@+id/imageView" />
 
     <Button
-        android:id="@+id/buttonAddTRCoral"
-        android:layout_width="110dp"
-        android:layout_height="110dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="75dp"
-        android:backgroundTint="#FF5722"
-        android:text="+"
-        app:layout_constraintEnd_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="@+id/imageView" />
-
-    <Button
-        android:id="@+id/buttonSubTRCoral"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="8dp"
-        android:backgroundTint="#FF5722"
-        android:text="-"
-        android:textSize="20sp"
-        app:cornerRadius="15dp"
-        app:layout_constraintBottom_toTopOf="@+id/imageView"
-        app:layout_constraintEnd_toEndOf="@+id/imageView" />
-
-    <Button
-        android:id="@+id/buttonAddBLCoral"
+        android:id="@+id/buttonAddBLAlgae"
         android:layout_width="110dp"
         android:layout_height="110dp"
         android:layout_marginStart="75dp"
@@ -90,7 +66,7 @@
         app:layout_constraintStart_toStartOf="@+id/imageView" />
 
     <Button
-        android:id="@+id/buttonSubBLCoral"
+        android:id="@+id/buttonSubBLAlgae"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginStart="8dp"
@@ -103,30 +79,7 @@
         app:layout_constraintStart_toStartOf="@+id/imageView" />
 
     <Button
-        android:id="@+id/buttonAddBRCoral"
-        android:layout_width="110dp"
-        android:layout_height="110dp"
-        android:layout_marginEnd="75dp"
-        android:layout_marginBottom="8dp"
-        android:backgroundTint="#FF5722"
-        android:text="+"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView"
-        app:layout_constraintEnd_toEndOf="@+id/imageView" />
-
-    <Button
-        android:id="@+id/buttonSubBRCoral"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="8dp"
-        android:backgroundTint="#FF5722"
-        android:text="-"
-        android:textSize="20sp"
-        app:cornerRadius="15dp"
-        app:layout_constraintEnd_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
-
-    <Button
-        android:id="@+id/buttonAddMRCoral"
+        android:id="@+id/buttonAddMRAlgae"
         android:layout_width="110dp"
         android:layout_height="110dp"
         android:layout_marginTop="8dp"
@@ -138,7 +91,7 @@
         app:layout_constraintTop_toTopOf="@+id/imageView" />
 
     <Button
-        android:id="@+id/buttonSubMRCoral"
+        android:id="@+id/buttonSubMRAlgae"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginEnd="8dp"
@@ -151,32 +104,7 @@
         app:layout_constraintEnd_toEndOf="@+id/imageView" />
 
     <Button
-        android:id="@+id/buttonAddMLCoral"
-        android:layout_width="110dp"
-        android:layout_height="110dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:backgroundTint="#FF5722"
-        android:text="+"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView"
-        app:layout_constraintStart_toStartOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="@+id/imageView" />
-
-    <Button
-        android:id="@+id/buttonSubMLCoral"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="80dp"
-        android:backgroundTint="#FF5722"
-        android:text="-"
-        android:textSize="20sp"
-        app:cornerRadius="15dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView"
-        app:layout_constraintStart_toStartOf="@+id/imageView" />
-
-    <Button
-        android:id="@+id/buttonCancelCoral"
+        android:id="@+id/buttonCancelAlgae"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"

@@ -3,6 +3,7 @@ package com.example.matchscouting;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AlertDialog;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -35,20 +36,6 @@ public class ScoutingActivity extends AppCompatActivity {
     Button buttonProcMinus;
     Button submitMatch;
     Button refreshTeamNumber;
-    Button buttonPassPlus;
-    Button buttonPassMinus;
-    Button buttonCoralTL;
-    Button buttonCoralTR;
-    Button buttonCoralML;
-    Button buttonCoralMR;
-    Button buttonCoralBL;
-    Button buttonCoralBR;
-    Button buttonSubCoralTL;
-    Button buttonSubCoralTR;
-    Button buttonSubCoralML;
-    Button buttonSubCoralMR;
-    Button buttonSubCoralBL;
-    Button buttonSubCoralBR;
     ToggleButton toggleBtnNoClimb;
     ToggleButton toggleBtnShallowClimb;
     ToggleButton toggleBtnDeepClimb;
@@ -124,20 +111,6 @@ public class ScoutingActivity extends AppCompatActivity {
         buttonProcPlus = (Button) findViewById(R.id.btnProcPlus);
         buttonProcMinus = (Button) findViewById(R.id.btnProcMinus);
 
-        buttonCoralTL = (Button) findViewById(R.id.buttonAddTLCoral);
-        buttonCoralTR = (Button) findViewById(R.id.buttonAddTRCoral);
-        buttonCoralML = (Button) findViewById(R.id.buttonAddMLCoral);
-        buttonCoralMR = (Button) findViewById(R.id.buttonAddMRCoral);
-        buttonCoralBL = (Button) findViewById(R.id.buttonAddBLCoral);
-        buttonCoralBR = (Button) findViewById(R.id.buttonAddBRCoral);
-
-        buttonSubCoralTL = (Button) findViewById(R.id.buttonSubTLCoral);
-        buttonSubCoralTR = (Button) findViewById(R.id.buttonSubTRCoral);
-        buttonSubCoralML = (Button) findViewById(R.id.buttonSubMLCoral);
-        buttonSubCoralMR = (Button) findViewById(R.id.buttonSubMRCoral);
-        buttonSubCoralBL = (Button) findViewById(R.id.buttonSubBLCoral);
-        buttonSubCoralBR = (Button) findViewById(R.id.buttonSubBRCoral);
-
         buttonNetPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -187,13 +160,6 @@ public class ScoutingActivity extends AppCompatActivity {
                 } else {
                     subTeleProc();
                 }
-            }
-        });
-
-        buttonCoralTL.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
             }
         });
 
@@ -253,6 +219,30 @@ public class ScoutingActivity extends AppCompatActivity {
             textTeamNumber.setEnabled(true);
         }
 
+        this.buttonCoralL4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                doCoralPopup(4);
+            }
+        });
+        this.buttonCoralL3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                doCoralPopup(3);
+            }
+        });
+        this.buttonCoralL2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                doCoralPopup(2);
+            }
+        });
+        this.buttonCoralL1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                doCoralPopup(1);
+            }
+        });
 
         textScouter = (EditText) findViewById(R.id.editTextScouter);
 
@@ -265,6 +255,151 @@ public class ScoutingActivity extends AppCompatActivity {
             }
         });
         refreshScoutingTable();
+    }
+
+    private void doCoralPopup(int level) {
+        String tablettext = this.textTablet.getText().toString();
+        if (tablettext.length() == 0) {
+            Toast.makeText(getApplicationContext(), "Please include a tablet number!", Toast.LENGTH_LONG).show();
+            return;
+        } else if (Integer.parseInt(tablettext) > 6 || Integer.parseInt(tablettext) < 1) {
+            Toast.makeText(getApplicationContext(), "Please include a tablet number between 1 and 6!", Toast.LENGTH_LONG).show();
+            return;
+        }
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.popup_coral);
+
+        Button buttonCoralTL = (Button) dialog.findViewById(R.id.buttonAddTLCoral);
+        Button buttonCoralTR = (Button) dialog.findViewById(R.id.buttonAddTRCoral);
+        Button buttonCoralML = (Button) dialog.findViewById(R.id.buttonAddMLCoral);
+        Button buttonCoralMR = (Button) dialog.findViewById(R.id.buttonAddMRCoral);
+        Button buttonCoralBL = (Button) dialog.findViewById(R.id.buttonAddBLCoral);
+        Button buttonCoralBR = (Button) dialog.findViewById(R.id.buttonAddBRCoral);
+        Button buttonCoralSubTL = (Button) dialog.findViewById(R.id.buttonSubTLCoral);
+        Button buttonCoralSubML = (Button) dialog.findViewById(R.id.buttonSubMLCoral);
+        Button buttonCoralSubBL = (Button) dialog.findViewById(R.id.buttonSubBLCoral);
+        Button buttonCoralSubBR = (Button) dialog.findViewById(R.id.buttonSubBRCoral);
+        Button buttonCoralSubMR = (Button) dialog.findViewById(R.id.buttonSubMRCoral);
+        Button buttonCoralSubTR = (Button) dialog.findViewById(R.id.buttonSubTRCoral);
+        Button cancelDialog = (Button) dialog.findViewById(R.id.buttonCancelCoral);
+        cancelDialog.setOnClickListener(v -> {
+            dialog.dismiss();
+        });
+
+        buttonCoralTL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addCoral(ScoringPosition.TOP_LEFT,Integer.parseInt(tablettext) < 4, false, level); //TODO: add scoring table
+                dialog.dismiss();
+            }
+        });
+        buttonCoralML.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addCoral(ScoringPosition.MIDDLE_LEFT,Integer.parseInt(tablettext) < 4, false, level);
+                dialog.dismiss();
+            }
+        });
+        buttonCoralBL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addCoral(ScoringPosition.BOTTOM_LEFT,Integer.parseInt(tablettext) < 4, false, level);
+                dialog.dismiss();
+            }
+        });
+        buttonCoralBR.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addCoral(ScoringPosition.BOTTOM_RIGHT,Integer.parseInt(tablettext) < 4, false, level);
+                dialog.dismiss();
+            }
+        });
+        buttonCoralMR.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addCoral(ScoringPosition.MIDDLE_RIGHT,Integer.parseInt(tablettext) < 4, false, level);
+                dialog.dismiss();
+            }
+        });
+        buttonCoralTR.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addCoral(ScoringPosition.TOP_RIGHT,Integer.parseInt(tablettext) < 4, false, level);
+                dialog.dismiss();
+            }
+        });
+        buttonCoralSubTL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                subCoral(ScoringPosition.TOP_LEFT, Integer.parseInt(tablettext) < 4, false, level);
+                dialog.dismiss();
+            }
+        });
+        buttonCoralSubML.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                subCoral(ScoringPosition.MIDDLE_LEFT, Integer.parseInt(tablettext) < 4, false, level);
+                dialog.dismiss();
+            }
+        });
+        buttonCoralSubBL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                subCoral(ScoringPosition.BOTTOM_LEFT, Integer.parseInt(tablettext) < 4, false, level);
+                dialog.dismiss();
+            }
+        });
+        buttonCoralSubBR.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                subCoral(ScoringPosition.BOTTOM_RIGHT, Integer.parseInt(tablettext) < 4, false, level);
+                dialog.dismiss();
+            }
+        });
+        buttonCoralSubMR.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                subCoral(ScoringPosition.MIDDLE_RIGHT, Integer.parseInt(tablettext) < 4, false, level);
+                dialog.dismiss();
+
+            }
+        });
+        buttonCoralSubTR.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                subCoral(ScoringPosition.TOP_RIGHT, Integer.parseInt(tablettext) < 4, false, level);
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+    }
+
+    public void doAlgaePopup(int level) {
+        String tablettext = this.textTablet.getText().toString();
+        if (tablettext.length() == 0) {
+            Toast.makeText(getApplicationContext(), "Please include a tablet number!", Toast.LENGTH_LONG).show();
+            return;
+        } else if (Integer.parseInt(tablettext) > 6 || Integer.parseInt(tablettext) < 1) {
+            Toast.makeText(getApplicationContext(), "Please include a tablet number between 1 and 6!", Toast.LENGTH_LONG).show();
+            return;
+        }
+        Dialog dialog = new Dialog(this);
+        if (level == 3 && ((this.scoringTable && Integer.parseInt(tablettext) > 3)
+                || (!this.scoringTable && Integer.parseInt(tablettext) < 4))) {
+            dialog.setContentView(R.layout.popup_l3_algae_left);
+        } else if (level == 3) {
+            dialog.setContentView(R.layout.popup_l3_algae_right);
+        } else if ((this.scoringTable && Integer.parseInt(tablettext) > 3)
+                || (!this.scoringTable && Integer.parseInt(tablettext) < 4)) {
+            dialog.setContentView(R.layout.popup_l2_algae_left);
+        } else {
+            dialog.setContentView(R.layout.popup_l2_algae_right);
+        }
+
+        //TODO: insert content rendering
+
+        dialog.show();
     }
 
     public String getTeamNumber(String matchNumber, String tablet) {
@@ -310,6 +445,8 @@ public class ScoutingActivity extends AppCompatActivity {
             buttonProcPlus.setText(processorText);
         }
     }
+
+
     public void toggleClimbs(int buttonPressed) {
         if (buttonPressed != 0) {
             toggleBtnNoClimb.setChecked(false);
@@ -384,12 +521,20 @@ public class ScoutingActivity extends AppCompatActivity {
         }
     }
 
-    public void addCoral(ScoringPosition scoringPosition, boolean red, boolean scoringTable) {
-        int index = scoringPosition.getArrayPos(red, scoringTable);
+    /**
+     * Method to add a coral to the scoring tally.
+     *
+     * @param scoringPosition The {@link ScoringPosition} used to indicate where on the reef the robot scored relative to the scout.
+     * @param isRed Boolean indicating whether the team scoring is on the red alliance.
+     * @param scoringTable Boolean indicating whether the scout is behind the scoring table.
+     * @param currLevel Integer indicating the level being scored on.
+     */
+    public void addCoral(ScoringPosition scoringPosition, boolean isRed, boolean scoringTable, int currLevel) {
+        int index = scoringPosition.getArrayPos(isRed, scoringTable);
         if (isAuto) {
             switch(currLevel) {
                 case 1:
-                    if (this.al1c[index] < 2) {
+                    if (this.al1c[index] < 8) {
                         al1c[index]++;
                     }
                     break;
@@ -414,7 +559,7 @@ public class ScoutingActivity extends AppCompatActivity {
         } else {
             switch(currLevel) {
                 case 1:
-                    if (this.tl1c[index] < 2) {
+                    if (this.tl1c[index] < 8) {
                         tl1c[index]++;
                     }
                     break;
@@ -439,7 +584,15 @@ public class ScoutingActivity extends AppCompatActivity {
         }
     }
 
-    public void subCoral(ScoringPosition scoringPosition) {
+    /**
+     * Method to remove a coral from the score tally.
+     *
+     * @param scoringPosition The {@link ScoringPosition} used to indicate where on the reef the robot scored relative to the scout.
+     * @param isRed Boolean indicating whether the team scoring is on the red alliance.
+     * @param scoringTable Boolean indicating whether the scout is behind the scoring table.
+     * @param currLevel Integer indicating the level being scored on.
+     */
+    public void subCoral(ScoringPosition scoringPosition, boolean isRed, boolean scoringTable, int currLevel) {
         int index = scoringPosition.getArrayPos(isRed, scoringTable);
         if (isAuto) {
             switch(currLevel) {
