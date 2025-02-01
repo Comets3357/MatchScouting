@@ -28,6 +28,7 @@ public class ScoutingActivity extends AppCompatActivity {
     Button buttonCoralL3;
     Button buttonCoralL2;
     Button buttonCoralL1;
+    Button buttonSubCoralL1;
     Button buttonAlgaeL3;
     Button buttonAlgaeL2;
     Button buttonNetPlus;
@@ -48,11 +49,11 @@ public class ScoutingActivity extends AppCompatActivity {
     int[] al4c;
     int[] al3c;
     int[] al2c;
-    int[] al1c;
+    int al1c;
     int[] tl4c;
     int[] tl3c;
     int[] tl2c;
-    int[] tl1c;
+    int tl1c;
     int autoProc;
     int teleProc;
     int autoNet;
@@ -68,6 +69,7 @@ public class ScoutingActivity extends AppCompatActivity {
 
     final String processorText = "Processor +\n";
     final String netText = "Net +\n";
+    final String l1CoralText = "L1 Coral +\n";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,11 +79,11 @@ public class ScoutingActivity extends AppCompatActivity {
         this.al4c = new int[6];
         this.al3c = new int[6];
         this.al2c = new int[6];
-        this.al1c = new int[6];
+        this.al1c = 0;
         this.tl4c = new int[6];
         this.tl3c = new int[6];
         this.tl2c = new int[6];
-        this.tl1c = new int[6];
+        this.tl1c = 0;
         this.al3a = new int[3];
         this.al2a = new int[3];
         this.tl3a = new int[3];
@@ -104,7 +106,7 @@ public class ScoutingActivity extends AppCompatActivity {
         buttonCoralL3 = (Button) findViewById(R.id.btnCoralL3);
         buttonCoralL2 = (Button) findViewById(R.id.btnCoralL2);
         buttonCoralL1 = (Button) findViewById(R.id.btnCoralL1);
-
+        buttonSubCoralL1 = (Button) findViewById(R.id.btnSubCoralL1);
         buttonNetPlus = (Button) findViewById(R.id.btnNetPlus);
         buttonNetMinus = (Button) findViewById(R.id.btnNetMinus);
 
@@ -240,7 +242,22 @@ public class ScoutingActivity extends AppCompatActivity {
         this.buttonCoralL1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                doCoralPopup(1);
+                if (isAuto) {
+                    addAutoCoralL1();
+                } else {
+                    addTeleCoralL1();
+                }
+            }
+        });
+
+        this.buttonSubCoralL1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isAuto) {
+                    subAutoCoralL1();
+                } else {
+                    subTeleCoralL1();
+                }
             }
         });
 
@@ -289,77 +306,77 @@ public class ScoutingActivity extends AppCompatActivity {
         buttonCoralTL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addCoral(ScoringPosition.TOP_LEFT,Integer.parseInt(tablettext) < 4, false, level); //TODO: add scoring table
+                addCoral(ScoringPosition.TOP_LEFT,Integer.parseInt(tablettext) < 4, scoringTable, level); //TODO: add scoring table
                 dialog.dismiss();
             }
         });
         buttonCoralML.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addCoral(ScoringPosition.MIDDLE_LEFT,Integer.parseInt(tablettext) < 4, false, level);
+                addCoral(ScoringPosition.MIDDLE_LEFT,Integer.parseInt(tablettext) < 4, scoringTable, level);
                 dialog.dismiss();
             }
         });
         buttonCoralBL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addCoral(ScoringPosition.BOTTOM_LEFT,Integer.parseInt(tablettext) < 4, false, level);
+                addCoral(ScoringPosition.BOTTOM_LEFT,Integer.parseInt(tablettext) < 4, scoringTable, level);
                 dialog.dismiss();
             }
         });
         buttonCoralBR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addCoral(ScoringPosition.BOTTOM_RIGHT,Integer.parseInt(tablettext) < 4, false, level);
+                addCoral(ScoringPosition.BOTTOM_RIGHT,Integer.parseInt(tablettext) < 4, scoringTable, level);
                 dialog.dismiss();
             }
         });
         buttonCoralMR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addCoral(ScoringPosition.MIDDLE_RIGHT,Integer.parseInt(tablettext) < 4, false, level);
+                addCoral(ScoringPosition.MIDDLE_RIGHT,Integer.parseInt(tablettext) < 4, scoringTable, level);
                 dialog.dismiss();
             }
         });
         buttonCoralTR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addCoral(ScoringPosition.TOP_RIGHT,Integer.parseInt(tablettext) < 4, false, level);
+                addCoral(ScoringPosition.TOP_RIGHT,Integer.parseInt(tablettext) < 4, scoringTable, level);
                 dialog.dismiss();
             }
         });
         buttonCoralSubTL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                subCoral(ScoringPosition.TOP_LEFT, Integer.parseInt(tablettext) < 4, false, level);
+                subCoral(ScoringPosition.TOP_LEFT, Integer.parseInt(tablettext) < 4, scoringTable, level);
                 dialog.dismiss();
             }
         });
         buttonCoralSubML.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                subCoral(ScoringPosition.MIDDLE_LEFT, Integer.parseInt(tablettext) < 4, false, level);
+                subCoral(ScoringPosition.MIDDLE_LEFT, Integer.parseInt(tablettext) < 4, scoringTable, level);
                 dialog.dismiss();
             }
         });
         buttonCoralSubBL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                subCoral(ScoringPosition.BOTTOM_LEFT, Integer.parseInt(tablettext) < 4, false, level);
+                subCoral(ScoringPosition.BOTTOM_LEFT, Integer.parseInt(tablettext) < 4, scoringTable, level);
                 dialog.dismiss();
             }
         });
         buttonCoralSubBR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                subCoral(ScoringPosition.BOTTOM_RIGHT, Integer.parseInt(tablettext) < 4, false, level);
+                subCoral(ScoringPosition.BOTTOM_RIGHT, Integer.parseInt(tablettext) < 4, scoringTable, level);
                 dialog.dismiss();
             }
         });
         buttonCoralSubMR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                subCoral(ScoringPosition.MIDDLE_RIGHT, Integer.parseInt(tablettext) < 4, false, level);
+                subCoral(ScoringPosition.MIDDLE_RIGHT, Integer.parseInt(tablettext) < 4, scoringTable, level);
                 dialog.dismiss();
 
             }
@@ -367,7 +384,7 @@ public class ScoutingActivity extends AppCompatActivity {
         buttonCoralSubTR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                subCoral(ScoringPosition.TOP_RIGHT, Integer.parseInt(tablettext) < 4, false, level);
+                subCoral(ScoringPosition.TOP_RIGHT, Integer.parseInt(tablettext) < 4, scoringTable, level);
                 dialog.dismiss();
             }
         });
@@ -430,8 +447,10 @@ public class ScoutingActivity extends AppCompatActivity {
             textViewClimbing.setVisibility(View.VISIBLE);
             String processorText = this.processorText +this.teleProc;
             String netText = this.netText +this.teleNet;
+            String coralL1Text = this.l1CoralText + this.tl1c;
             buttonNetPlus.setText(netText);
             buttonProcPlus.setText(processorText);
+            buttonCoralL1.setText(coralL1Text);
         } else {
             this.isAuto = true;
             toggleBtnNoClimb.setVisibility(View.GONE);
@@ -440,9 +459,10 @@ public class ScoutingActivity extends AppCompatActivity {
             textViewClimbing.setVisibility(View.GONE);
             String processorText = this.processorText +this.autoProc;
             String netText = this.netText +this.autoNet;
-
+            String coralL1Text = this.l1CoralText + this.al1c;
             buttonNetPlus.setText(netText);
             buttonProcPlus.setText(processorText);
+            buttonCoralL1.setText(coralL1Text);
         }
     }
 
@@ -468,6 +488,34 @@ public class ScoutingActivity extends AppCompatActivity {
     public void addAutoNet() {
         if (this.autoNet < 9) {
             this.autoNet++;
+            refreshScoutingTable();
+        }
+    }
+
+    public void addAutoCoralL1() {
+        if (this.al1c < 10) {
+            this.al1c++;
+            refreshScoutingTable();
+        }
+    }
+
+    public void subAutoCoralL1() {
+        if (this.al1c > 0) {
+            this.al1c--;
+            refreshScoutingTable();
+        }
+    }
+
+    public void addTeleCoralL1() {
+        if (this.tl1c < 50) {
+            this.tl1c++;
+            refreshScoutingTable();
+        }
+    }
+
+    public void subTeleCoralL1() {
+        if (this.tl1c > 0) {
+            this.tl1c--;
             refreshScoutingTable();
         }
     }
@@ -533,11 +581,6 @@ public class ScoutingActivity extends AppCompatActivity {
         int index = scoringPosition.getArrayPos(isRed, scoringTable);
         if (isAuto) {
             switch(currLevel) {
-                case 1:
-                    if (this.al1c[index] < 8) {
-                        al1c[index]++;
-                    }
-                    break;
                 case 2:
                     if (this.al2c[index] < 2) {
                         al2c[index]++;
@@ -558,11 +601,6 @@ public class ScoutingActivity extends AppCompatActivity {
             }
         } else {
             switch(currLevel) {
-                case 1:
-                    if (this.tl1c[index] < 8) {
-                        tl1c[index]++;
-                    }
-                    break;
                 case 2:
                     if (this.tl2c[index] < 2) {
                         tl2c[index]++;
@@ -596,11 +634,6 @@ public class ScoutingActivity extends AppCompatActivity {
         int index = scoringPosition.getArrayPos(isRed, scoringTable);
         if (isAuto) {
             switch(currLevel) {
-                case 1:
-                    if (this.al1c[index] > 0) {
-                        al1c[index]--;
-                    }
-                    break;
                 case 2:
                     if (this.al2c[index] > 0) {
                         al2c[index]--;
@@ -621,11 +654,6 @@ public class ScoutingActivity extends AppCompatActivity {
             }
         } else {
             switch(currLevel) {
-                case 1:
-                    if (this.tl1c[index] > 0) {
-                        tl1c[index]--;
-                    }
-                    break;
                 case 2:
                     if (this.tl2c[index] > 0) {
                         tl2c[index]--;
@@ -702,11 +730,7 @@ public class ScoutingActivity extends AppCompatActivity {
             sb.append(i);
         }
         matchData.setAutoL2Coral(sb.toString());
-        sb = new StringBuilder();
-        for (int i : this.al1c) {
-            sb.append(i);
-        }
-        matchData.setAutoL1Coral(sb.toString());
+        matchData.setAutoL1Coral(this.al1c);
         sb = new StringBuilder();
         for (int i : this.tl4c) {
             sb.append(i);
@@ -722,11 +746,7 @@ public class ScoutingActivity extends AppCompatActivity {
             sb.append(i);
         }
         matchData.setTeleL2Coral(sb.toString());
-        sb = new StringBuilder();
-        for (int i : this.tl1c) {
-            sb.append(i);
-        }
-        matchData.setTeleL1Coral(sb.toString());
+        matchData.setTeleL1Coral(this.tl1c);
         sb = new StringBuilder();
         for (int i : this.al3a) {
             sb.append(i);
@@ -770,11 +790,11 @@ public class ScoutingActivity extends AppCompatActivity {
         this.al4c = new int[6];
         this.al3c = new int[6];
         this.al2c = new int[6];
-        this.al1c = new int[6];
+        this.al1c = 0;
         this.tl4c = new int[6];
         this.tl3c = new int[6];
         this.tl2c = new int[6];
-        this.tl1c = new int[6];
+        this.tl1c = 0;
         this.al3a = new int[3];
         this.al2a = new int[3];
         this.tl3a = new int[3];

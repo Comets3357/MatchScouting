@@ -22,7 +22,7 @@
     <Button
         android:id="@+id/btnCoralL4"
         android:layout_width="180dp"
-        android:layout_height="130dp"
+        android:layout_height="120dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="48dp"
         android:backgroundTint="#FF5722"
@@ -35,7 +35,7 @@
     <Button
         android:id="@+id/btnAlgaeL3"
         android:layout_width="180dp"
-        android:layout_height="130dp"
+        android:layout_height="120dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:backgroundTint="#009688"
@@ -49,7 +49,7 @@
     <Button
         android:id="@+id/btnAlgaeL2"
         android:layout_width="180dp"
-        android:layout_height="130dp"
+        android:layout_height="120dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
@@ -64,7 +64,7 @@
     <Button
         android:id="@+id/btnProcPlus"
         android:layout_width="180dp"
-        android:layout_height="130dp"
+        android:layout_height="120dp"
         android:layout_marginTop="48dp"
         android:layout_marginEnd="24dp"
         android:backgroundTint="#009688"
@@ -90,7 +90,7 @@
     <Button
         android:id="@+id/btnNetPlus"
         android:layout_width="180dp"
-        android:layout_height="130dp"
+        android:layout_height="120dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
         android:backgroundTint="#009688"
@@ -116,7 +116,7 @@
     <Button
         android:id="@+id/btnCoralL3"
         android:layout_width="180dp"
-        android:layout_height="130dp"
+        android:layout_height="120dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:backgroundTint="#FF5722"
@@ -129,7 +129,7 @@
     <Button
         android:id="@+id/btnCoralL1"
         android:layout_width="180dp"
-        android:layout_height="130dp"
+        android:layout_height="120dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:backgroundTint="#FF5722"
@@ -138,6 +138,19 @@
         app:cornerRadius="5dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnCoralL2" />
+
+    <Button
+        android:id="@+id/btnSubCoralL1"
+        android:layout_width="180dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#F44336"
+        android:text="-"
+        android:textSize="26dp"
+        app:cornerRadius="5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnCoralL1" />
 
     <ToggleButton
         android:id="@+id/toggleBtnNoClimb"

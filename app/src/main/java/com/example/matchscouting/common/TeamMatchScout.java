@@ -34,7 +34,7 @@ public class TeamMatchScout {
     public String autoL2Coral;
 
     @ColumnInfo(name="auto_l1_coral")
-    public String autoL1Coral;
+    public int autoL1Coral;
 
     @ColumnInfo(name="tele_l4_coral")
     public String teleL4Coral;
@@ -46,7 +46,7 @@ public class TeamMatchScout {
     public String teleL2Coral;
 
     @ColumnInfo(name="tele_l1_coral")
-    public String teleL1Coral;
+    public int teleL1Coral;
 
     @ColumnInfo(name="auto_net")
     public int autoNet;
