@@ -33,7 +33,7 @@
         app:layout_constraintTop_toBottomOf="@+id/toggleAutoButton" />
 
     <Button
-        android:id="@+id/btnAlgaeL3"
+        android:id="@+id/btnAlgaePlusL3"
         android:layout_width="180dp"
         android:layout_height="120dp"
         android:layout_marginStart="16dp"
@@ -47,7 +47,20 @@
         app:layout_constraintTop_toTopOf="@+id/btnCoralL3" />
 
     <Button
-        android:id="@+id/btnAlgaeL2"
+        android:id="@+id/btnSubAlgaeL3"
+        android:layout_width="180dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#00887C"
+        android:text="-"
+        android:textSize="26dp"
+        app:cornerRadius="5dp"
+        app:layout_constraintEnd_toEndOf="@+id/btnAlgaePlusL3"
+        app:layout_constraintStart_toStartOf="@+id/btnAlgaePlusL3"
+        app:layout_constraintTop_toBottomOf="@+id/btnAlgaePlusL3" />
+
+    <Button
+        android:id="@+id/btnAlgaePlusL2"
         android:layout_width="180dp"
         android:layout_height="120dp"
         android:layout_marginStart="16dp"
@@ -59,7 +72,20 @@
         app:cornerRadius="5dp"
         app:layout_constraintEnd_toStartOf="@+id/btnProcMinus"
         app:layout_constraintStart_toEndOf="@+id/btnCoralL4"
-        app:layout_constraintTop_toBottomOf="@+id/btnAlgaeL3" />
+        app:layout_constraintTop_toBottomOf="@+id/btnSubAlgaeL3" />
+
+    <Button
+        android:id="@+id/btnSubAlgaeL2"
+        android:layout_width="180dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#00887C"
+        android:text="-"
+        android:textSize="26dp"
+        app:cornerRadius="5dp"
+        app:layout_constraintEnd_toEndOf="@+id/btnAlgaePlusL2"
+        app:layout_constraintStart_toStartOf="@+id/btnAlgaePlusL2"
+        app:layout_constraintTop_toBottomOf="@+id/btnAlgaePlusL2" />
 
     <Button
         android:id="@+id/btnProcPlus"
@@ -290,8 +316,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:text="Algae Removal"
-        app:layout_constraintBottom_toTopOf="@+id/btnAlgaeL3"
-        app:layout_constraintEnd_toEndOf="@+id/btnAlgaeL3"
-        app:layout_constraintStart_toStartOf="@+id/btnAlgaeL3" />
+        app:layout_constraintBottom_toTopOf="@+id/btnAlgaePlusL3"
+        app:layout_constraintEnd_toEndOf="@+id/btnAlgaePlusL3"
+        app:layout_constraintStart_toStartOf="@+id/btnAlgaePlusL3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

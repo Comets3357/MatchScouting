@@ -61,16 +61,16 @@ public class TeamMatchScout {
     public int teleProcessor;
 
     @ColumnInfo(name="auto_l3_algae")
-    public String autoL3Algae;
+    public int autoL3Algae;
 
     @ColumnInfo(name="auto_l2_algae")
-    public String autoL2Algae;
+    public int autoL2Algae;
 
     @ColumnInfo(name="tele_l3_algae")
-    public String teleL3Algae;
+    public int teleL3Algae;
 
     @ColumnInfo(name="tele_l2_algae")
-    public String teleL2Algae;
+    public int teleL2Algae;
 
     @ColumnInfo(name="endgame")
     public String endgame;
