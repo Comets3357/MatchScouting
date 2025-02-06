@@ -89,4 +89,16 @@
         android:textOn="Using Match Schedule"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonBeginScouting" />
+
+    <ToggleButton
+        android:id="@+id/toggleButtonScoringTable"
+        android:layout_width="301dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="64dp"
+        android:text="ToggleButton"
+        android:textOff="AUDIENCE SIDE"
+        android:textOn="SCORING TABLE"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toggleBtnUseMatchSchedule" />
 </androidx.constraintlayout.widget.ConstraintLayout>

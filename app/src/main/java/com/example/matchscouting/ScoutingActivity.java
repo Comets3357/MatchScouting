@@ -6,11 +6,13 @@ import androidx.appcompat.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -98,6 +100,7 @@ public class ScoutingActivity extends AppCompatActivity {
         this.teleNet = 0;
         this.currLevel = 0;
         this.isAuto = true;
+        this.scoringTable = db.activeEventKeyDao().getScoringTableKey().equals("1");
         toggleAutoButton = (ToggleButton) findViewById(R.id.toggleAutoButton);
         toggleAutoButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -354,6 +357,12 @@ public class ScoutingActivity extends AppCompatActivity {
         Button buttonCoralSubMR = (Button) dialog.findViewById(R.id.buttonSubMRCoral);
         Button buttonCoralSubTR = (Button) dialog.findViewById(R.id.buttonSubTRCoral);
         Button cancelDialog = (Button) dialog.findViewById(R.id.buttonCancelCoral);
+        ImageView redDsLeft = (ImageView) dialog.findViewById(R.id.imgRedDsLeft);
+        ImageView redDsRight = (ImageView) dialog.findViewById(R.id.imgRedDsRight);
+        ImageView blueDsLeft = (ImageView) dialog.findViewById(R.id.imgBlueDsLeft);
+        ImageView blueDsRight = (ImageView) dialog.findViewById(R.id.imgBlueDsRight);
+        ImageView bargeLeft = (ImageView) dialog.findViewById(R.id.imgBargeLeft);
+        ImageView bargeRight = (ImageView) dialog.findViewById(R.id.imgBargeRight);
         cancelDialog.setOnClickListener(v -> {
             dialog.dismiss();
         });
@@ -364,83 +373,83 @@ public class ScoutingActivity extends AppCompatActivity {
         buttonCoralTL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addCoral(ScoringPosition.TOP_LEFT, isRed, scoringTable, level);
+                addCoral(ScoringPosition.TOP_LEFT, isRed, level);
                 dialog.dismiss();
             }
         });
-        buttonCoralTL.setText(String.format(buttonText,getTextForCoralPopup(ScoringPosition.TOP_LEFT, isRed, scoringTable, level)));
+        buttonCoralTL.setText(String.format(buttonText,getTextForCoralPopup(ScoringPosition.TOP_LEFT, isRed, level)));
         buttonCoralML.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addCoral(ScoringPosition.MIDDLE_LEFT, isRed, scoringTable, level);
+                addCoral(ScoringPosition.MIDDLE_LEFT, isRed, level);
                 dialog.dismiss();
             }
         });
-        buttonCoralML.setText(String.format(buttonText,getTextForCoralPopup(ScoringPosition.MIDDLE_LEFT, isRed, scoringTable, level)));
+        buttonCoralML.setText(String.format(buttonText,getTextForCoralPopup(ScoringPosition.MIDDLE_LEFT, isRed, level)));
         buttonCoralBL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addCoral(ScoringPosition.BOTTOM_LEFT, isRed, scoringTable, level);
+                addCoral(ScoringPosition.BOTTOM_LEFT, isRed, level);
                 dialog.dismiss();
             }
         });
-        buttonCoralBL.setText(String.format(buttonText,getTextForCoralPopup(ScoringPosition.BOTTOM_LEFT, isRed, scoringTable, level)));
+        buttonCoralBL.setText(String.format(buttonText,getTextForCoralPopup(ScoringPosition.BOTTOM_LEFT, isRed, level)));
         buttonCoralBR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addCoral(ScoringPosition.BOTTOM_RIGHT, isRed, scoringTable, level);
+                addCoral(ScoringPosition.BOTTOM_RIGHT, isRed, level);
                 dialog.dismiss();
             }
         });
-        buttonCoralBR.setText(String.format(buttonText,getTextForCoralPopup(ScoringPosition.BOTTOM_RIGHT, isRed, scoringTable, level)));
+        buttonCoralBR.setText(String.format(buttonText,getTextForCoralPopup(ScoringPosition.BOTTOM_RIGHT, isRed, level)));
         buttonCoralMR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addCoral(ScoringPosition.MIDDLE_RIGHT, isRed, scoringTable, level);
+                addCoral(ScoringPosition.MIDDLE_RIGHT, isRed, level);
                 dialog.dismiss();
             }
         });
-        buttonCoralMR.setText(String.format(buttonText,getTextForCoralPopup(ScoringPosition.MIDDLE_RIGHT, isRed, scoringTable, level)));
+        buttonCoralMR.setText(String.format(buttonText,getTextForCoralPopup(ScoringPosition.MIDDLE_RIGHT, isRed, level)));
         buttonCoralTR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addCoral(ScoringPosition.TOP_RIGHT, isRed, scoringTable, level);
+                addCoral(ScoringPosition.TOP_RIGHT, isRed, level);
                 dialog.dismiss();
             }
         });
-        buttonCoralTR.setText(String.format(buttonText,getTextForCoralPopup(ScoringPosition.TOP_RIGHT, isRed, scoringTable, level)));
+        buttonCoralTR.setText(String.format(buttonText,getTextForCoralPopup(ScoringPosition.TOP_RIGHT, isRed, level)));
         buttonCoralSubTL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                subCoral(ScoringPosition.TOP_LEFT, isRed, scoringTable, level);
+                subCoral(ScoringPosition.TOP_LEFT, isRed, level);
                 dialog.dismiss();
             }
         });
         buttonCoralSubML.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                subCoral(ScoringPosition.MIDDLE_LEFT, isRed, scoringTable, level);
+                subCoral(ScoringPosition.MIDDLE_LEFT, isRed, level);
                 dialog.dismiss();
             }
         });
         buttonCoralSubBL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                subCoral(ScoringPosition.BOTTOM_LEFT, isRed, scoringTable, level);
+                subCoral(ScoringPosition.BOTTOM_LEFT, isRed, level);
                 dialog.dismiss();
             }
         });
         buttonCoralSubBR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                subCoral(ScoringPosition.BOTTOM_RIGHT, isRed, scoringTable, level);
+                subCoral(ScoringPosition.BOTTOM_RIGHT, isRed, level);
                 dialog.dismiss();
             }
         });
         buttonCoralSubMR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                subCoral(ScoringPosition.MIDDLE_RIGHT, isRed, scoringTable, level);
+                subCoral(ScoringPosition.MIDDLE_RIGHT, isRed, level);
                 dialog.dismiss();
 
             }
@@ -448,10 +457,36 @@ public class ScoutingActivity extends AppCompatActivity {
         buttonCoralSubTR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                subCoral(ScoringPosition.TOP_RIGHT, isRed, scoringTable, level);
+                subCoral(ScoringPosition.TOP_RIGHT, isRed, level);
                 dialog.dismiss();
             }
         });
+
+        if (ScoringPosition.TOP_LEFT.getArrayPos(isRed, scoringTable) == 0) {
+            bargeLeft.setVisibility(View.GONE);
+            bargeRight.setVisibility(View.VISIBLE);
+            blueDsRight.setVisibility(View.GONE);
+            redDsRight.setVisibility(View.GONE);
+            if (isRed) {
+                redDsLeft.setVisibility(View.VISIBLE);
+                blueDsLeft.setVisibility(View.GONE);
+            } else {
+                redDsLeft.setVisibility(View.GONE);
+                blueDsLeft.setVisibility(View.VISIBLE);
+            }
+        } else {
+            bargeRight.setVisibility(View.GONE);
+            bargeLeft.setVisibility(View.VISIBLE);
+            blueDsLeft.setVisibility(View.GONE);
+            redDsLeft.setVisibility(View.GONE);
+            if (isRed) {
+                redDsRight.setVisibility(View.VISIBLE);
+                blueDsRight.setVisibility(View.GONE);
+            } else {
+                redDsRight.setVisibility(View.GONE);
+                blueDsRight.setVisibility(View.VISIBLE);
+            }
+        }
 
         dialog.show();
     }
@@ -666,7 +701,7 @@ public class ScoutingActivity extends AppCompatActivity {
      * @param scoringTable Boolean indicating whether the scout is behind the scoring table.
      * @param currLevel Integer indicating the level being scored on.
      */
-    private void addCoral(ScoringPosition scoringPosition, boolean isRed, boolean scoringTable, int currLevel) {
+    private void addCoral(ScoringPosition scoringPosition, boolean isRed, int currLevel) {
         int index = scoringPosition.getArrayPos(isRed, scoringTable);
         if (isAuto) {
             switch(currLevel) {
@@ -716,10 +751,9 @@ public class ScoutingActivity extends AppCompatActivity {
      *
      * @param scoringPosition The {@link ScoringPosition} used to indicate where on the reef the robot scored relative to the scout.
      * @param isRed Boolean indicating whether the team scoring is on the red alliance.
-     * @param scoringTable Boolean indicating whether the scout is behind the scoring table.
      * @param currLevel Integer indicating the level being scored on.
      */
-    private void subCoral(ScoringPosition scoringPosition, boolean isRed, boolean scoringTable, int currLevel) {
+    private void subCoral(ScoringPosition scoringPosition, boolean isRed, int currLevel) {
         int index = scoringPosition.getArrayPos(isRed, scoringTable);
         if (isAuto) {
             switch(currLevel) {
@@ -764,7 +798,7 @@ public class ScoutingActivity extends AppCompatActivity {
         }
     }
 
-    private int getTextForCoralPopup(ScoringPosition scoringPosition, boolean isRed, boolean scoringTable, int currLevel) {
+    private int getTextForCoralPopup(ScoringPosition scoringPosition, boolean isRed, int currLevel) {
         int index = scoringPosition.getArrayPos(isRed, scoringTable);
         if (isAuto) {
             switch(currLevel) {

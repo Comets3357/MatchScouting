@@ -67,8 +67,15 @@ public class MainActivity extends AppCompatActivity {
             db.activeEventKeyDao().initMatchScheduleKey();
         }
 
+        if (db.activeEventKeyDao().countScoringTableKey() < 1) {
+            db.activeEventKeyDao().initScoringTableKey();
+        }
+
         this.enableMatchScheduleButton = (ToggleButton) findViewById(R.id.toggleBtnUseMatchSchedule);
         this.downloadMatchesButton = (Button) findViewById(R.id.buttonLoadMatchSchedule);
+
+        ToggleButton scoringTableButton = (ToggleButton) findViewById(R.id.toggleButtonScoringTable);
+        scoringTableButton.setChecked(db.activeEventKeyDao().getScoringTableKey().equals("1"));
 
         checkToggleMatchSchedule();
 
@@ -76,6 +83,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 toggleMatchSchedule();
+            }
+        });
+
+        scoringTableButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                toggleScoringTable();
             }
         });
 
@@ -112,6 +126,17 @@ public class MainActivity extends AppCompatActivity {
         } else {
             enableMatchScheduleButton.setVisibility(View.INVISIBLE);
             db.activeEventKeyDao().setMatchScheduleKey("0");
+        }
+    }
+
+    public void toggleScoringTable() {
+        if (db.activeEventKeyDao().getScoringTableKey().equals("0")) {
+            db.activeEventKeyDao().setScoringTableKey("1");
+        } else {
+            db.activeEventKeyDao().setScoringTableKey("0");
+        }
+        if (db.activeEventKeyDao().getMatchScheduleKey().equals("1")) {
+            enableMatchScheduleButton.setChecked(true);
         }
     }
 
