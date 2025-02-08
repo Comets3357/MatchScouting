@@ -4,19 +4,27 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.example.matchscouting.common.JsonResponse;
 import com.example.matchscouting.common.MatchSchedule;
+import com.example.matchscouting.common.ScoutingDataServerResponse;
 import com.example.matchscouting.common.Team;
+import com.example.matchscouting.dao.ScoutingDataServerRestDao;
 
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Scanner;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
     AppDatabase db;
@@ -24,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     Button openQrCodeButton;
     Button beginScoutingButton;
     Button downloadMatchesButton;
+    Button getDataFromServerButton;
     ToggleButton enableMatchScheduleButton;
     EditText ipAddressEditText;
     EditText eventKeyEditText;
@@ -97,6 +106,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 loadMatchSchedule();
+            }
+        });
+
+        this.getDataFromServerButton = (Button) findViewById(R.id.buttonDownloadData);
+        this.getDataFromServerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getDataFromServer();
+                checkToggleMatchSchedule();
             }
         });
 
@@ -194,6 +212,39 @@ public class MainActivity extends AppCompatActivity {
     public void beginMatchScouting() {
         Intent scoutingIntent = new Intent(this, ScoutingActivity.class);
         startActivity(scoutingIntent);
+    }
+
+    public void getDataFromServer() {
+        EditText ipEditText = (EditText) findViewById(R.id.editTextIP);
+        ScoutingDataServerRestDao.getApiInterface("http://"+ipEditText.getText().toString()+":5000").getScoutingDataServerData()
+                .enqueue(new Callback<JsonResponse>() {
+                    @Override
+                    public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {
+                        if (response.body() != null){
+                            Log.d("TAG","Successful data retrieval");
+                            ScoutingDataServerResponse sdsresponse = response.body().getResponse();
+                            db.activeEventKeyDao().setScoringTableKey(sdsresponse.getScoringTable());
+                            db.activeEventKeyDao().setActiveEventKey(sdsresponse.getEventKey());
+                            eventKeyEditText.setText(sdsresponse.getEventKey());
+                            for (MatchSchedule matchSchedule : sdsresponse.getMatchSchedule()) {
+                                if (db.matchScheduleDao().matchAlreadyLoaded(matchSchedule.getEventKey(), matchSchedule.getMatchNumber()) < 1) {
+                                    db.matchScheduleDao().insertAll(matchSchedule);
+                                }
+                            }
+                            scoringTableButton.setChecked(db.activeEventKeyDao().getScoringTableKey().equals("1"));
+                            Toast.makeText(getApplicationContext(),"Successfully downloaded data from server",Toast.LENGTH_LONG).show();
+                        } else {
+                            Log.d("TAG","Failure");
+                            Toast.makeText(getApplicationContext(),"Error",Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<JsonResponse> call, Throwable t) {
+                        Log.d("TAG","Failure :-"+t.getMessage());
+                        Toast.makeText(getApplicationContext(),"ERROR "+t.getMessage(),Toast.LENGTH_LONG).show();
+                    }
+                });
     }
 
 

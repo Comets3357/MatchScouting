@@ -18,6 +18,10 @@ public interface MatchScheduleDao {
     @Query("SELECT COUNT(matchNumber) FROM MatchSchedule WHERE eventKey = :event_key")
     int eventHasLoadedMatches(String event_key);
 
+    @Query("SELECT COUNT(matchNumber) FROM MatchSchedule WHERE eventKey = :event_key " +
+            "AND matchNumber = :matchNumber")
+    int matchAlreadyLoaded(String event_key, String matchNumber);
+
     @Query("SELECT COUNT(matchNumber) FROM MatchSchedule WHERE matchNumber = :match_number AND eventKey = :event_key")
     int matchExists(String event_key, String match_number);
 
