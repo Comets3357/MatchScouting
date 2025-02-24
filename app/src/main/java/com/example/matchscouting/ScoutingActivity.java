@@ -76,6 +76,9 @@ public class ScoutingActivity extends AppCompatActivity {
     final String l1CoralText = "L1 Coral +\n";
     final String l3AlgaeText = "L3 Algae +\n";
     final String l2AlgaeText = "L2 Algae +\n";
+    final String l4CoralText = "L4 Coral \n";
+    final String l3CoralText = "L3 Coral \n";
+    final String l2CoralText = "L2 Coral \n";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -522,11 +525,25 @@ public class ScoutingActivity extends AppCompatActivity {
             String coralL1Text = this.l1CoralText + this.tl1c;
             String algaeL3Text = this.l3AlgaeText + this.tl3a;
             String algaeL2Text = this.l2AlgaeText + this.tl2a;
+            int l2C = 0;
+            int l3C = 0;
+            int l4C = 0;
+            for (int i = 0; i < 6; i++) {
+                l2C+=this.tl2c[i];
+                l3C+=this.tl3c[i];
+                l4C+=this.tl4c[i];
+            }
+            String coralL2Text = this.l2CoralText + l2C;
+            String coralL3Text = this.l3CoralText + l3C;
+            String coralL4Text = this.l4CoralText + l4C;
             buttonNetPlus.setText(netText);
             buttonProcPlus.setText(processorText);
             buttonCoralL1.setText(coralL1Text);
             buttonAddAlgaeL3.setText(algaeL3Text);
             buttonAddAlgaeL2.setText(algaeL2Text);
+            buttonCoralL2.setText(coralL2Text);
+            buttonCoralL3.setText(coralL3Text);
+            buttonCoralL4.setText(coralL4Text);
         } else {
             this.isAuto = true;
             toggleBtnNoClimb.setVisibility(View.GONE);
@@ -538,11 +555,25 @@ public class ScoutingActivity extends AppCompatActivity {
             String coralL1Text = this.l1CoralText + this.al1c;
             String algaeL3Text = this.l3AlgaeText + this.al3a;
             String algaeL2Text = this.l2AlgaeText + this.al2a;
+            int l2C = 0;
+            int l3C = 0;
+            int l4C = 0;
+            for (int i = 0; i < 6; i++) {
+                l2C+=this.al2c[i];
+                l3C+=this.al3c[i];
+                l4C+=this.al4c[i];
+            }
+            String coralL2Text = this.l2CoralText + l2C;
+            String coralL3Text = this.l3CoralText + l3C;
+            String coralL4Text = this.l4CoralText + l4C;
             buttonNetPlus.setText(netText);
             buttonProcPlus.setText(processorText);
             buttonCoralL1.setText(coralL1Text);
             buttonAddAlgaeL3.setText(algaeL3Text);
             buttonAddAlgaeL2.setText(algaeL2Text);
+            buttonCoralL2.setText(coralL2Text);
+            buttonCoralL3.setText(coralL3Text);
+            buttonCoralL4.setText(coralL4Text);
         }
     }
 
@@ -698,7 +729,6 @@ public class ScoutingActivity extends AppCompatActivity {
      *
      * @param scoringPosition The {@link ScoringPosition} used to indicate where on the reef the robot scored relative to the scout.
      * @param isRed Boolean indicating whether the team scoring is on the red alliance.
-     * @param scoringTable Boolean indicating whether the scout is behind the scoring table.
      * @param currLevel Integer indicating the level being scored on.
      */
     private void addCoral(ScoringPosition scoringPosition, boolean isRed, int currLevel) {
@@ -709,16 +739,19 @@ public class ScoutingActivity extends AppCompatActivity {
                     if (this.al2c[index] < 2) {
                         al2c[index]++;
                     }
+                    refreshScoutingTable();
                     break;
                 case 3:
                     if (this.al3c[index] < 2) {
                         al3c[index]++;
                     }
+                    refreshScoutingTable();
                     break;
                 case 4:
                     if (this.al4c[index] < 2) {
                         al4c[index]++;
                     }
+                    refreshScoutingTable();
                     break;
                 default:
                     break;
@@ -729,16 +762,19 @@ public class ScoutingActivity extends AppCompatActivity {
                     if (this.tl2c[index] < 2) {
                         tl2c[index]++;
                     }
+                    refreshScoutingTable();
                     break;
                 case 3:
                     if (this.tl3c[index] < 2) {
                         tl3c[index]++;
                     }
+                    refreshScoutingTable();
                     break;
                 case 4:
                     if (this.tl4c[index] < 2) {
                         tl4c[index]++;
                     }
+                    refreshScoutingTable();
                     break;
                 default:
                     break;
@@ -761,16 +797,19 @@ public class ScoutingActivity extends AppCompatActivity {
                     if (this.al2c[index] > 0) {
                         al2c[index]--;
                     }
+                    refreshScoutingTable();
                     break;
                 case 3:
                     if (this.al3c[index] > 0) {
                         al3c[index]--;
                     }
+                    refreshScoutingTable();
                     break;
                 case 4:
                     if (this.al4c[index] > 0) {
                         al4c[index]--;
                     }
+                    refreshScoutingTable();
                     break;
                 default:
                     break;
@@ -781,16 +820,19 @@ public class ScoutingActivity extends AppCompatActivity {
                     if (this.tl2c[index] > 0) {
                         tl2c[index]--;
                     }
+                    refreshScoutingTable();
                     break;
                 case 3:
                     if (this.tl3c[index] > 0) {
                         tl3c[index]--;
                     }
+                    refreshScoutingTable();
                     break;
                 case 4:
                     if (this.tl4c[index] > 0) {
                         tl4c[index]--;
                     }
+                    refreshScoutingTable();
                     break;
                 default:
                     break;
