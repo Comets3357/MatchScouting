@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     Button downloadMatchesButton;
     Button getDataFromServerButton;
     ToggleButton enableMatchScheduleButton;
+    ToggleButton scoringTableButton;
     EditText ipAddressEditText;
     EditText eventKeyEditText;
     @Override
@@ -81,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         this.enableMatchScheduleButton = (ToggleButton) findViewById(R.id.toggleBtnUseMatchSchedule);
+        this.scoringTableButton = (ToggleButton) findViewById(R.id.toggleButtonScoringTable);
         this.downloadMatchesButton = (Button) findViewById(R.id.buttonLoadMatchSchedule);
 
         ToggleButton scoringTableButton = (ToggleButton) findViewById(R.id.toggleButtonScoringTable);
