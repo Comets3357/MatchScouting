@@ -13,13 +13,15 @@ import android.widget.ToggleButton;
 
 import com.example.matchscouting.common.JsonResponse;
 import com.example.matchscouting.common.MatchSchedule;
+import com.example.matchscouting.common.PostDataResponse;
 import com.example.matchscouting.common.ScoutingDataServerResponse;
 import com.example.matchscouting.common.Team;
+import com.example.matchscouting.common.TeamMatchScout;
 import com.example.matchscouting.dao.ScoutingDataServerRestDao;
 
 import java.io.InputStream;
 import java.util.Arrays;
-import java.util.Objects;
+import java.util.List;
 import java.util.Scanner;
 
 import retrofit2.Call;
@@ -33,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     Button beginScoutingButton;
     Button downloadMatchesButton;
     Button getDataFromServerButton;
+    Button sendDataToServerButton;
     ToggleButton enableMatchScheduleButton;
     ToggleButton scoringTableButton;
     EditText ipAddressEditText;
@@ -120,6 +123,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        this.ipAddressEditText = (EditText) findViewById(R.id.editTextIP);
+        this.sendDataToServerButton = (Button) findViewById(R.id.buttonWifiTransfer);
+        this.sendDataToServerButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                sendDataToServer();
+            }
+        });
     }
 
     public void setEventKey() {
@@ -217,8 +229,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void getDataFromServer() {
-        EditText ipEditText = (EditText) findViewById(R.id.editTextIP);
-        ScoutingDataServerRestDao.getApiInterface("http://"+ipEditText.getText().toString()+":5000").getScoutingDataServerData()
+        ScoutingDataServerRestDao.getApiInterface("http://"+this.ipAddressEditText.getText().toString()+":5000").getScoutingDataServerData()
                 .enqueue(new Callback<JsonResponse>() {
                     @Override
                     public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {
@@ -243,6 +254,29 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<JsonResponse> call, Throwable t) {
+                        Log.d("TAG","Failure :-"+t.getMessage());
+                        Toast.makeText(getApplicationContext(),"ERROR "+t.getMessage(),Toast.LENGTH_LONG).show();
+                    }
+                });
+    }
+
+    public void sendDataToServer() {
+        List<TeamMatchScout> scoutedData = this.db.teamMatchScoutDao().getAllMatchesAtEvent(this.db.activeEventKeyDao().getActiveEventKey());
+        ScoutingDataServerRestDao.getApiInterface("http://"+this.ipAddressEditText.getText().toString()+":5000").sendDataToServer(scoutedData)
+                .enqueue(new Callback<PostDataResponse>() {
+                    @Override
+                    public void onResponse(Call<PostDataResponse> call, Response<PostDataResponse> response) {
+                        if (response.body() != null){
+                            Log.d("TAG","Successful data send");
+                            Toast.makeText(getApplicationContext(),"Successfully sent data to server",Toast.LENGTH_LONG).show();
+                        } else {
+                            Log.d("TAG","Failure");
+                            Toast.makeText(getApplicationContext(),"Error",Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<PostDataResponse> call, Throwable t) {
                         Log.d("TAG","Failure :-"+t.getMessage());
                         Toast.makeText(getApplicationContext(),"ERROR "+t.getMessage(),Toast.LENGTH_LONG).show();
                     }

@@ -89,7 +89,7 @@
     <ToggleButton
         android:id="@+id/toggleBtnUseMatchSchedule"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:text="ToggleButton"
@@ -101,9 +101,9 @@
     <ToggleButton
         android:id="@+id/toggleButtonScoringTable"
         android:layout_width="301dp"
-        android:layout_height="43dp"
+        android:layout_height="60dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="32dp"
         android:text="ToggleButton"
         android:textOff="AUDIENCE SIDE"
         android:textOn="SCORING TABLE"
@@ -134,4 +134,16 @@
         app:layout_constraintBottom_toBottomOf="@+id/editTextIP"
         app:layout_constraintStart_toEndOf="@+id/editTextIP"
         app:layout_constraintTop_toTopOf="@+id/editTextIP" />
+
+    <Button
+        android:id="@+id/buttonWifiTransfer"
+        android:layout_width="250dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="32dp"
+        android:text="Transfer Data Over Wifi"
+        app:cornerRadius="5dp"
+        android:backgroundTint="#FF5722"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/buttonQrTransfer" />
 </androidx.constraintlayout.widget.ConstraintLayout>
