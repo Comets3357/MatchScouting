@@ -215,7 +215,10 @@ public class MainActivity extends AppCompatActivity {
                 if (vals.length >= 2) {
                     team.teamNumber = vals[0];
                     team.teamName = vals[1];
-                    db.teamDao().insertAll(team);
+                    if (db.teamDao().teamExists(team.teamNumber) == 0) {
+                        db.teamDao().insertAll(team);
+                    }
+
                 }
             }
         } catch (Exception e) {
