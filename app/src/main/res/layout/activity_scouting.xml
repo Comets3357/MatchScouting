@@ -178,55 +178,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnCoralL1" />
 
-    <ToggleButton
-        android:id="@+id/toggleBtnNoClimb"
-        android:layout_width="130dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/toggle_button_drawable"
-        android:checked="true"
-        android:text="ToggleButton"
-        android:textOff="No Climb"
-        android:textOn="No Climb"
-        app:layout_constraintEnd_toEndOf="@+id/toggleBtnDeepClimb"
-        app:layout_constraintTop_toBottomOf="@+id/toggleBtnDeepClimb" />
-
-    <ToggleButton
-        android:id="@+id/toggleBtnShallowClimb"
-        android:layout_width="130dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="64dp"
-        android:background="@drawable/toggle_button_drawable"
-        android:text="ToggleButton"
-        android:textOff="SHALLOW"
-        android:textOn="SHALLOW"
-        app:layout_constraintBottom_toTopOf="@+id/toggleBtnDeepClimb"
-        app:layout_constraintEnd_toEndOf="@+id/toggleBtnDeepClimb"
-        app:layout_constraintTop_toBottomOf="@+id/btnNetMinus" />
-
-    <ToggleButton
-        android:id="@+id/toggleBtnDeepClimb"
-        android:layout_width="130dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/toggle_button_drawable"
-        android:text="ToggleButton"
-        android:textOff="DEEP"
-        android:textOn="DEEP"
-        app:layout_constraintEnd_toEndOf="@+id/btnNetPlus"
-        app:layout_constraintStart_toStartOf="@+id/btnNetPlus"
-        app:layout_constraintTop_toBottomOf="@+id/toggleBtnShallowClimb" />
-
-    <TextView
-        android:id="@+id/textViewClimbing"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:text="Climbing"
-        app:layout_constraintBottom_toTopOf="@+id/toggleBtnShallowClimb"
-        app:layout_constraintEnd_toEndOf="@+id/toggleBtnShallowClimb"
-        app:layout_constraintStart_toStartOf="@+id/toggleBtnShallowClimb" />
-
     <EditText
         android:id="@+id/editTextTeamNumber"
         android:layout_width="wrap_content"
@@ -319,5 +270,18 @@
         app:layout_constraintBottom_toTopOf="@+id/btnAlgaePlusL3"
         app:layout_constraintEnd_toEndOf="@+id/btnAlgaePlusL3"
         app:layout_constraintStart_toStartOf="@+id/btnAlgaePlusL3" />
+
+    <Button
+        android:id="@+id/buttonEndgame"
+        android:layout_width="180dp"
+        android:layout_height="130dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="24dp"
+        android:backgroundTint="#7C6861"
+        android:text="Endgame"
+        android:textSize="24sp"
+        app:cornerRadius="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnNetMinus" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

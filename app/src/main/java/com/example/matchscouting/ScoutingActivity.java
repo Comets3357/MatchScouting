@@ -35,16 +35,13 @@ public class ScoutingActivity extends AppCompatActivity {
     Button buttonSubAlgaeL3;
     Button buttonAddAlgaeL2;
     Button buttonSubAlgaeL2;
+    Button endgamePopupButton;
     Button buttonNetPlus;
     Button buttonNetMinus;
     Button buttonProcPlus;
     Button buttonProcMinus;
     Button submitMatch;
     Button refreshTeamNumber;
-    ToggleButton toggleBtnNoClimb;
-    ToggleButton toggleBtnShallowClimb;
-    ToggleButton toggleBtnDeepClimb;
-    TextView textViewClimbing;
     EditText textTeamNumber;
     EditText textMatchNumber;
     EditText textScouter;
@@ -66,6 +63,7 @@ public class ScoutingActivity extends AppCompatActivity {
     int al2a;
     int tl3a;
     int tl2a;
+    int endgame;
     int currLevel;
     boolean isAuto;
     boolean isRed;
@@ -97,6 +95,7 @@ public class ScoutingActivity extends AppCompatActivity {
         this.al2a = 0;
         this.tl3a = 0;
         this.tl2a = 0;
+        this.endgame = 0;
         this.autoProc = 0;
         this.teleProc = 0;
         this.autoNet = 0;
@@ -129,6 +128,7 @@ public class ScoutingActivity extends AppCompatActivity {
 
         buttonProcPlus = (Button) findViewById(R.id.btnProcPlus);
         buttonProcMinus = (Button) findViewById(R.id.btnProcMinus);
+
 
         buttonAddAlgaeL3.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -226,29 +226,14 @@ public class ScoutingActivity extends AppCompatActivity {
             }
         });
 
-        toggleBtnNoClimb = (ToggleButton) findViewById(R.id.toggleBtnNoClimb);
-        toggleBtnNoClimb.setOnClickListener(new View.OnClickListener() {
+        this.endgamePopupButton = (Button) findViewById(R.id.buttonEndgame);
+        endgamePopupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                toggleClimbs(0);
-            }
-        });
-        toggleBtnShallowClimb = (ToggleButton) findViewById(R.id.toggleBtnShallowClimb);
-        toggleBtnShallowClimb.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                toggleClimbs(1);
-            }
-        });
-        toggleBtnDeepClimb = (ToggleButton) findViewById(R.id.toggleBtnDeepClimb);
-        toggleBtnDeepClimb.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                toggleClimbs(2);
+                doEndgamePopup();
             }
         });
 
-        textViewClimbing = (TextView) findViewById(R.id.textViewClimbing);
 
         textTeamNumber = (EditText) findViewById(R.id.editTextTeamNumber);
         textMatchNumber = (EditText) findViewById(R.id.editTextMatchNumber);
@@ -333,6 +318,49 @@ public class ScoutingActivity extends AppCompatActivity {
             }
         });
         refreshScoutingTable();
+    }
+
+    private void doEndgamePopup() {
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.popup_endgame);
+
+        ToggleButton noClimbTb = (ToggleButton) dialog.findViewById(R.id.buttonNoClimb);
+        ToggleButton shallowClimbTb = (ToggleButton) dialog.findViewById(R.id.buttonShallowCage);
+        ToggleButton deepClimbTb = (ToggleButton) dialog.findViewById(R.id.buttonDeepCage);
+        Button cancelButton = (Button) dialog.findViewById(R.id.buttonCancelEndgame);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        noClimbTb.setChecked(this.endgame == 0);
+        shallowClimbTb.setChecked(this.endgame == 1);
+        deepClimbTb.setChecked(this.endgame == 2);
+
+        noClimbTb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                endgame = 0;
+                dialog.dismiss();
+            }
+        });
+        shallowClimbTb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                endgame = 1;
+                dialog.dismiss();
+            }
+        });
+        deepClimbTb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                endgame = 2;
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
     }
 
     private void doCoralPopup(int level) {
@@ -516,10 +544,7 @@ public class ScoutingActivity extends AppCompatActivity {
     public void refreshScoutingTable() {
         if (toggleAutoButton.isChecked()) {
             this.isAuto = false;
-            toggleBtnNoClimb.setVisibility(View.VISIBLE);
-            toggleBtnShallowClimb.setVisibility(View.VISIBLE);
-            toggleBtnDeepClimb.setVisibility(View.VISIBLE);
-            textViewClimbing.setVisibility(View.VISIBLE);
+            endgamePopupButton.setVisibility(View.VISIBLE);
             String processorText = this.processorText +this.teleProc;
             String netText = this.netText +this.teleNet;
             String coralL1Text = this.l1CoralText + this.tl1c;
@@ -546,10 +571,7 @@ public class ScoutingActivity extends AppCompatActivity {
             buttonCoralL4.setText(coralL4Text);
         } else {
             this.isAuto = true;
-            toggleBtnNoClimb.setVisibility(View.GONE);
-            toggleBtnShallowClimb.setVisibility(View.GONE);
-            toggleBtnDeepClimb.setVisibility(View.GONE);
-            textViewClimbing.setVisibility(View.GONE);
+            endgamePopupButton.setVisibility(View.GONE);
             String processorText = this.processorText +this.autoProc;
             String netText = this.netText +this.autoNet;
             String coralL1Text = this.l1CoralText + this.al1c;
@@ -577,12 +599,6 @@ public class ScoutingActivity extends AppCompatActivity {
         }
     }
 
-
-    public void toggleClimbs(int buttonPressed) {
-        toggleBtnNoClimb.setChecked(buttonPressed == 0);
-        toggleBtnShallowClimb.setChecked(buttonPressed == 1);
-        toggleBtnDeepClimb.setChecked(buttonPressed == 2);
-    }
 
     public void addAutoNet() {
         if (this.autoNet < 9) {
@@ -867,19 +883,6 @@ public class ScoutingActivity extends AppCompatActivity {
         }
     }
 
-    public int getClimbNumber() {
-        if (this.toggleBtnNoClimb.isChecked()) {
-            return 0;
-        }
-        if (this.toggleBtnShallowClimb.isChecked()) {
-            return 1;
-        }
-        if (this.toggleBtnDeepClimb.isChecked()) {
-            return 2;
-        }
-        return 0;
-    }
-
     public void submitMatch() {
         int errors = 0;
         if (this.textTeamNumber.getText().toString().length() == 0) {
@@ -947,9 +950,8 @@ public class ScoutingActivity extends AppCompatActivity {
         matchData.setTeleNet(this.teleNet);
         matchData.setAutoProcessor(this.autoProc);
         matchData.setTeleProcessor(this.teleProc);
-        matchData.setEndgame(""+getClimbNumber());
         matchData.setEvent(this.db.activeEventKeyDao().getActiveEventKey());
-        matchData.setEndgame(""+getClimbNumber());
+        matchData.setEndgame(""+this.endgame);
         if (db.teamMatchScoutDao().getAlreadySubmitted(matchData.getTeamNumber(), matchData.getEvent(), matchData.getMatchNumber()) > 0) {
             db.teamMatchScoutDao().update(matchData);
         } else {
@@ -979,7 +981,7 @@ public class ScoutingActivity extends AppCompatActivity {
         this.teleProc = 0;
         this.autoNet = 0;
         this.teleNet = 0;
-        toggleClimbs(0);
+        this.endgame = 0;
         this.textTeamNumber.setText("");
         int oldMatch = Integer.parseInt(this.textMatchNumber.getText().toString());
         String newMatchText = (oldMatch + 1) + "";
